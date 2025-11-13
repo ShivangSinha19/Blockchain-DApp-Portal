@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Consumer Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: -120px;
+            left: -120px;
+            animation: rotate 20s linear infinite;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
+            animation: rotate 25s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 45px;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header .icon-wrapper {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-header .icon-wrapper i {
+            color: white;
+            font-size: 2.2rem;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            color: #17a2b8;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 0 0.25rem rgba(23, 162, 184, 0.15);
+            background: #fff;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745;
+        }
+
+        .invalid-feedback, .valid-feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #17a2b8;
+        }
+
+        .form-check-input:checked {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+            border: none;
+            padding: 14px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.4);
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.5);
+            background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #17a2b8;
+            color: #17a2b8;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background: #17a2b8;
+            border-color: #17a2b8;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            color: #17a2b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #20c997;
+            text-decoration: none;
+            transform: translateX(-5px);
+            display: inline-block;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+            color: #6c757d;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            background: #f8f9fa;
+            text-decoration: none;
+            color: #333;
+            border-color: #dee2e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-btn i {
+            font-size: 1.1rem;
+        }
+
+        .social-btn.google i {
+            color: #DB4437;
+        }
+
+        .social-btn.facebook i {
+            color: #4267B2;
+        }
+
+        .quick-verify {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .quick-verify:hover {
+            border-color: #17a2b8;
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.1);
+        }
+
+        .quick-verify h6 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .quick-verify p {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-verify {
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-verify:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+            color: white;
+        }
+
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h2>Consumer Login</h2>
+                <p>Access your verification dashboard</p>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <form id="consumerLoginForm" novalidate>
+                <div class="mb-3">
+                    <label for="consumerEmail" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="consumerEmail" 
+                               placeholder="your.email@example.com" required autocomplete="email">
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="consumerPassword" class="form-label">Password</label>
+                    <div class="input-group position-relative">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="consumerPassword" 
+                               placeholder="Enter your password" required minlength="6" autocomplete="current-password">
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me for 30 days
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-login w-100 mb-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard
+                </button>
+
+                <div class="text-center">
+                    <a href="#" class="text-muted" id="forgotPassword">Forgot Password?</a>
+                </div>
+
+                <div class="divider">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <div class="social-login">
+                    <a href="#" class="social-btn google" id="googleLogin">
+                        <i class="fab fa-google"></i> Google
+                    </a>
+                    <a href="#" class="social-btn facebook" id="facebookLogin">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </a>
+                </div>
+
+                <div class="divider">
+                    <span>NEW USER?</span>
+                </div>
+
+                <div class="text-center">
+                    <a href="consumerReg.html" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-user-plus me-2"></i>Sign Up Free
+                    </a>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Home
+                    </a>
+                </div>
+            </form>
+
+            <div class="quick-verify">
+                <h6><i class="fas fa-bolt text-warning me-2"></i>Quick Product Verification</h6>
+                <p class="text-muted small mb-3">Don't have an account? Verify products instantly without signing up</p>
+                <button class="btn btn-verify" id="quickVerifyBtn">
+                    <i class="fas fa-qrcode me-2"></i>Scan QR Code Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Password toggle functionality
+            $('#togglePassword').on('click', function() {
+                const passwordField = $('#consumerPassword');
+                const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Email validation
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // Show alert function
+            function showAlert(message, type) {
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'info' ? 'info-circle' : 'exclamation-circle'} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                $('#alertContainer').html(alertHtml);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(function() {
+                    $('.alert').fadeOut();
+                }, 5000);
+            }
+
+            // Real-time email validation
+            $('#consumerEmail').on('blur', function() {
+                const email = $(this).val();
+                if (email && !validateEmail(email)) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (email) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // Real-time password validation
+            $('#consumerPassword').on('input', function() {
+                const password = $(this).val();
+                if (password.length > 0 && password.length < 6) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (password.length >= 6) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // Forgot password
+            $('#forgotPassword').on('click', function(e) {
+                e.preventDefault();
+                showAlert('Password reset link will be sent to your registered email address.', 'info');
+            });
+
+            // Social login handlers
+            $('#googleLogin').on('click', function(e) {
+                e.preventDefault();
+                showAlert('Google authentication will be integrated here. Please use email login for now.', 'info');
+            });
+
+            $('#facebookLogin').on('click', function(e) {
+                e.preventDefault();
+                showAlert('Facebook authentication will be integrated here. Please use email login for now.', 'info');
+            });
+
+            // Quick verify button
+            $('#quickVerifyBtn').on('click', function() {
+                showAlert('QR Code scanner opening... Redirecting to verification page.', 'info');
+                setTimeout(function() {
+                    // Redirect to quick verification page
+                    // window.location.href = 'quick-verify.html';
+                    console.log('Redirect to quick verification page');
+                }, 1500);
+            });
+
+            // Form submission
+            $('#consumerLoginForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const email = $('#consumerEmail').val().trim();
+                const password = $('#consumerPassword').val();
+                const rememberMe = $('#rememberMe').is(':checked');
+
+                // Validation
+                let isValid = true;
+
+                if (!validateEmail(email)) {
+                    $('#consumerEmail').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#consumerEmail').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (password.length < 6) {
+                    $('#consumerPassword').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#consumerPassword').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!isValid) {
+                    showAlert('Please correct the errors in the form before submitting.', 'danger');
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = $('button[type="submit"]');
+                const originalText = submitBtn.html();
+                submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Authenticating...').prop('disabled', true);
+
+                // Simulate API call
+                setTimeout(function() {
+                    // Demo credentials for testing
+                    const demoEmail = 'consumer@demo.com';
+                    const demoPassword = 'demo123';
+
+                    if (email === demoEmail && password === demoPassword) {
+                        showAlert('Login successful! Redirecting to your dashboard...', 'success');
+                        
+                        // Store session (in real app, this would be handled server-side)
+                        if (rememberMe) {
+                            console.log('Remember me enabled - session extended to 30 days');
+                        }
+                        
+                        setTimeout(function() {
+                            window.location.href = 'consumer.html';
+                        }, 1500);
+                    } else {
+                        showAlert('Invalid credentials. Please try again.<br><small>Demo: consumer@demo.com / demo123</small>', 'danger');
+                        submitBtn.html(originalText).prop('disabled', false);
+                    }
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

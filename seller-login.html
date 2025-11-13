@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Seller Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 45px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header .icon-wrapper {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(17, 153, 142, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-header .icon-wrapper i {
+            color: white;
+            font-size: 2.2rem;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            color: #11998e;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #11998e;
+            box-shadow: 0 0 0 0.25rem rgba(17, 153, 142, 0.15);
+            background: #fff;
+        }
+
+        .form-control.is-invalid, .form-select.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-valid, .form-select.is-valid {
+            border-color: #28a745;
+        }
+
+        .invalid-feedback, .valid-feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #11998e;
+        }
+
+        .form-check-input:checked {
+            background-color: #11998e;
+            border-color: #11998e;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            padding: 14px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.5);
+            background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #11998e;
+            color: #11998e;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background: #11998e;
+            border-color: #11998e;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            color: #11998e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #38ef7d;
+            text-decoration: none;
+            transform: translateX(-5px);
+            display: inline-block;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .info-tooltip {
+            display: inline-block;
+            margin-left: 5px;
+            color: #6c757d;
+            cursor: help;
+        }
+
+        .info-tooltip:hover {
+            color: #11998e;
+        }
+
+        .gstin-format-helper {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .gstin-format-helper i {
+            color: #11998e;
+        }
+
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h2>Seller Login</h2>
+                <p>Access your seller dashboard</p>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <form id="sellerLoginForm" novalidate>
+                <div class="mb-3">
+                    <label for="sellerEmail" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="sellerEmail" 
+                               placeholder="seller@store.com" required autocomplete="email">
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sellerPassword" class="form-label">Password</label>
+                    <div class="input-group position-relative">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="sellerPassword" 
+                               placeholder="Enter your password" required minlength="6" autocomplete="current-password">
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sellerGstin" class="form-label">
+                        GSTIN Number
+                        <i class="fas fa-info-circle info-tooltip" 
+                           data-bs-toggle="tooltip" 
+                           title="15-digit Goods and Services Tax Identification Number"></i>
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-receipt"></i></span>
+                        <input type="text" class="form-control" id="sellerGstin" 
+                               placeholder="22AAAAA0000A1Z5" required 
+                               pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}"
+                               maxlength="15" autocomplete="off">
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid 15-digit GSTIN (e.g., 22AAAAA0000A1Z5).</div>
+                    <div class="gstin-format-helper">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Format: 2 digits + 5 letters + 4 digits + 1 letter + 1 digit/letter + Z + 1 digit/letter</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sellerType" class="form-label">Seller Type</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-store"></i></span>
+                        <select class="form-select" id="sellerType" required>
+                            <option value="">Select your seller type</option>
+                            <option value="retailer">🛒 Retailer</option>
+                            <option value="wholesaler">📦 Wholesaler</option>
+                            <option value="distributor">🚚 Distributor</option>
+                            <option value="online-marketplace">🌐 Online Marketplace</option>
+                        </select>
+                    </div>
+                    <div class="invalid-feedback">Please select a seller type.</div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me for 30 days
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-login w-100 mb-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard
+                </button>
+
+                <div class="text-center">
+                    <a href="#" class="text-muted" id="forgotPassword">Forgot Password?</a>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="text-center">
+                    <p class="mb-2 text-muted">Don't have an account?</p>
+                    <a href="sellerReg.html" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-user-plus me-2"></i>Register as Seller
+                    </a>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Home
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Password toggle functionality
+            $('#togglePassword').on('click', function() {
+                const passwordField = $('#sellerPassword');
+                const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Email validation
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // GSTIN validation (Indian tax ID format)
+            function validateGSTIN(gstin) {
+                const re = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+                return re.test(gstin);
+            }
+
+            // Show alert function
+            function showAlert(message, type) {
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'info' ? 'info-circle' : 'exclamation-circle'} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                $('#alertContainer').html(alertHtml);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(function() {
+                    $('.alert').fadeOut();
+                }, 5000);
+            }
+
+            // Real-time email validation
+            $('#sellerEmail').on('blur', function() {
+                const email = $(this).val();
+                if (email && !validateEmail(email)) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (email) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // Real-time password validation
+            $('#sellerPassword').on('input', function() {
+                const password = $(this).val();
+                if (password.length > 0 && password.length < 6) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (password.length >= 6) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // GSTIN formatting and validation
+            $('#sellerGstin').on('input', function() {
+                let value = $(this).val().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                $(this).val(value);
+            });
+
+            $('#sellerGstin').on('blur', function() {
+                const gstin = $(this).val().toUpperCase();
+                if (gstin && !validateGSTIN(gstin)) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (gstin) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // Seller type validation
+            $('#sellerType').on('change', function() {
+                const type = $(this).val();
+                if (type) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                } else {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                }
+            });
+
+            // Forgot password
+            $('#forgotPassword').on('click', function(e) {
+                e.preventDefault();
+                showAlert('Password reset instructions will be sent to your registered email. Please contact support@fakeid.com for assistance.', 'info');
+            });
+
+            // Form submission
+            $('#sellerLoginForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const email = $('#sellerEmail').val().trim();
+                const password = $('#sellerPassword').val();
+                const gstin = $('#sellerGstin').val().trim().toUpperCase();
+                const sellerType = $('#sellerType').val();
+                const rememberMe = $('#rememberMe').is(':checked');
+
+                // Validation
+                let isValid = true;
+
+                if (!validateEmail(email)) {
+                    $('#sellerEmail').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#sellerEmail').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (password.length < 6) {
+                    $('#sellerPassword').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#sellerPassword').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!validateGSTIN(gstin)) {
+                    $('#sellerGstin').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#sellerGstin').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!sellerType) {
+                    $('#sellerType').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#sellerType').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!isValid) {
+                    showAlert('Please correct the errors in the form before submitting.', 'danger');
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = $('button[type="submit"]');
+                const originalText = submitBtn.html();
+                submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Authenticating...').prop('disabled', true);
+
+                // Simulate API call
+                setTimeout(function() {
+                    // Demo credentials for testing
+                    const demoEmail = 'seller@demo.com';
+                    const demoPassword = 'demo123';
+                    const demoGSTIN = '22AAAAA0000A1Z5';
+                    const demoType = 'retailer';
+
+                    if (email === demoEmail && password === demoPassword && 
+                        gstin === demoGSTIN && sellerType === demoType) {
+                        showAlert('Login successful! Redirecting to your seller dashboard...', 'success');
+                        
+                        // Store session (in real app, this would be handled server-side)
+                        if (rememberMe) {
+                            console.log('Remember me enabled - session extended to 30 days');
+                        }
+                        
+                        setTimeout(function() {
+                            window.location.href = 'seller.html';
+                        }, 1500);
+                    } else {
+                        showAlert('Invalid credentials. Please try again.<br><small>Demo: seller@demo.com / demo123 / 22AAAAA0000A1Z5 / Retailer</small>', 'danger');
+                        submitBtn.html(originalText).prop('disabled', false);
+                    }
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

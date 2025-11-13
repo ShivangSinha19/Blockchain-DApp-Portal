@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Seller Registration - Blockchain Product Authentication</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+			min-height: 100vh;
+			padding: 40px 0;
+		}
+		
+		.registration-container {
+			max-width: 700px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+		
+		.registration-card {
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+			padding: 40px;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header .icon-circle {
+			width: 80px;
+			height: 80px;
+			background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 20px;
+			color: white;
+			font-size: 32px;
+		}
+		
+		.registration-header h2 {
+			color: #2c3e50;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+		
+		.registration-header p {
+			color: #6c757d;
+		}
+		
+		.form-section {
+			margin-bottom: 30px;
+		}
+		
+		.section-title {
+			font-weight: 600;
+			color: #11998e;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #e9ecef;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		
+		.form-group {
+			margin-bottom: 20px;
+		}
+		
+		.form-group label {
+			font-weight: 600;
+			color: #34495e;
+			margin-bottom: 8px;
+			display: block;
+		}
+		
+		.form-control, .form-select {
+			border: 2px solid #e9ecef;
+			border-radius: 10px;
+			padding: 12px 16px;
+			font-size: 16px;
+			transition: all 0.3s ease;
+		}
+		
+		.form-control:focus, .form-select:focus {
+			border-color: #11998e;
+			box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
+		}
+		
+		.form-control.is-valid {
+			border-color: #28a745;
+		}
+		
+		.form-control.is-invalid {
+			border-color: #dc3545;
+		}
+		
+		.input-icon {
+			position: relative;
+		}
+		
+		.input-icon i {
+			position: absolute;
+			left: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #6c757d;
+		}
+		
+		.input-icon .form-control, 
+		.input-icon .form-select {
+			padding-left: 45px;
+		}
+		
+		.btn-register {
+			background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+			border: none;
+			color: white;
+			padding: 15px 30px;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 16px;
+			width: 100%;
+			transition: all 0.3s ease;
+		}
+		
+		.btn-register:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+		}
+		
+		.form-check {
+			margin: 20px 0;
+		}
+		
+		.form-check-label {
+			color: #6c757d;
+		}
+		
+		.form-check-label a {
+			color: #11998e;
+			text-decoration: none;
+		}
+		
+		.back-link {
+			text-align: center;
+			margin-top: 20px;
+		}
+		
+		.back-link a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+		}
+		
+		.back-link a:hover {
+			text-decoration: underline;
+		}
+		
+		@media (max-width: 768px) {
+			.registration-card {
+				padding: 25px;
+			}
+			
+			.registration-header .icon-circle {
+				width: 60px;
+				height: 60px;
+				font-size: 24px;
+			}
+		}
+	</style>
+	</head>
+	<body>
+		<div class="registration-container">
+			<div class="registration-card">
+				<div class="registration-header">
+					<div class="icon-circle">
+						<i class="fas fa-user-tie"></i>
+					</div>
+					<h2>Seller Registration</h2>
+					<p>Join our distribution network on the blockchain</p>
+				</div>
+
+				<form id="sellerRegistrationForm">
+					<!-- Business Information -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-store"></i>
+							Business Information
+						</h5>
+						
+						<div class="form-group">
+							<label for="businessName">Business Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-store"></i>
+								<input type="text" class="form-control" id="businessName" placeholder="Enter your business name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="brandName">Brand Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-tag"></i>
+								<input type="text" class="form-control" id="brandName" placeholder="Enter brand name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="businessType">Business Type *</label>
+							<div class="input-icon">
+								<i class="fas fa-briefcase"></i>
+								<select class="form-select" id="businessType" required>
+									<option value="">Select business type</option>
+									<option value="retailer">Retailer</option>
+									<option value="wholesaler">Wholesaler</option>
+									<option value="distributor">Distributor</option>
+									<option value="online-marketplace">Online Marketplace</option>
+									<option value="franchise">Franchise</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="gstNumber">GSTIN Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-receipt"></i>
+								<input type="text" class="form-control" id="gstNumber" placeholder="22AAAAA0000A1Z5" pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}" required>
+							</div>
+							<small class="text-muted">Format: 22AAAAA0000A1Z5</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="businessAddress">Business Address *</label>
+							<textarea class="form-control" id="businessAddress" rows="3" placeholder="Enter complete address" required></textarea>
+						</div>
+					</div>
+
+					<!-- Owner Information -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-user"></i>
+							Owner/Manager Details
+						</h5>
+						
+						<div class="form-group">
+							<label for="ownerName">Full Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-user"></i>
+								<input type="text" class="form-control" id="ownerName" placeholder="Enter your full name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="designation">Designation *</label>
+							<div class="input-icon">
+								<i class="fas fa-id-badge"></i>
+								<input type="text" class="form-control" id="designation" placeholder="e.g., Owner, Store Manager" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="phoneNumber">Phone Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-phone"></i>
+								<input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Account Credentials -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-lock"></i>
+							Account Credentials
+						</h5>
+						
+						<div class="form-group">
+							<label for="email">Email Address *</label>
+							<div class="input-icon">
+								<i class="fas fa-envelope"></i>
+								<input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="password">Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
+							</div>
+							<small class="text-muted">Use 8+ characters with letters, numbers & symbols</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="confirmPassword">Confirm Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Terms and Conditions -->
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="termsCheck" required>
+						<label class="form-check-label" for="termsCheck">
+							I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+						</label>
+					</div>
+
+					<button type="submit" class="btn-register">
+						<i class="fas fa-user-plus me-2"></i>
+						Register as Seller
+					</button>
+				</form>
+			</div>
+
+			<div class="back-link">
+				<a href="seller-login.html">
+					<i class="fas fa-arrow-left me-2"></i>
+					Already have an account? Login here
+				</a>
+			</div>
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				// GSTIN validation
+				$('#gstNumber').on('blur', function() {
+					const gstin = $(this).val();
+					const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+					
+					if (gstin && !gstinRegex.test(gstin)) {
+						$(this).addClass('is-invalid');
+					} else if (gstin) {
+						$(this).addClass('is-valid');
+					}
+				});
+
+				// Form validation
+				$('#sellerRegistrationForm').on('submit', function(e) {
+					e.preventDefault();
+					
+					if (!validateForm()) {
+						return false;
+					}
+
+					// Show loading state
+					const submitBtn = $('button[type="submit"]');
+					const originalText = submitBtn.html();
+					submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Processing Registration...');
+					submitBtn.prop('disabled', true);
+
+					// Simulate registration process
+					setTimeout(function() {
+						alert('Registration successful! Your account is pending approval from the manufacturer.');
+						window.location.href = 'seller-login.html';
+					}, 2000);
+				});
+
+				// Real-time validation
+				$('.form-control').on('blur', function() {
+					validateField($(this));
+				});
+			});
+
+			function validateField(field) {
+				const value = field.val().trim();
+				const fieldId = field.attr('id');
+				
+				field.removeClass('is-valid is-invalid');
+				
+				if (!value && field.prop('required')) {
+					field.addClass('is-invalid');
+					return false;
+				}
+				
+				// Email validation
+				if (fieldId === 'email') {
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if (!emailRegex.test(value)) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Phone validation
+				if (fieldId === 'phoneNumber') {
+					const phoneRegex = /^[0-9]{10,15}$/;
+					if (!phoneRegex.test(value.replace(/[\s-]/g, ''))) {
+						field.addClass('

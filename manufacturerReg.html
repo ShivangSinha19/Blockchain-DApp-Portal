@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Manufacturer Registration - Blockchain Product Authentication</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			min-height: 100vh;
+			padding: 40px 0;
+		}
+		
+		.registration-container {
+			max-width: 700px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+		
+		.registration-card {
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+			padding: 40px;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header .icon-circle {
+			width: 80px;
+			height: 80px;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 20px;
+			color: white;
+			font-size: 32px;
+		}
+		
+		.registration-header h2 {
+			color: #2c3e50;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+		
+		.registration-header p {
+			color: #6c757d;
+		}
+		
+		.form-section {
+			margin-bottom: 30px;
+		}
+		
+		.section-title {
+			font-weight: 600;
+			color: #667eea;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #e9ecef;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		
+		.form-group {
+			margin-bottom: 20px;
+		}
+		
+		.form-group label {
+			font-weight: 600;
+			color: #34495e;
+			margin-bottom: 8px;
+			display: block;
+		}
+		
+		.form-control {
+			border: 2px solid #e9ecef;
+			border-radius: 10px;
+			padding: 12px 16px;
+			font-size: 16px;
+			transition: all 0.3s ease;
+		}
+		
+		.form-control:focus {
+			border-color: #667eea;
+			box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+		}
+		
+		.form-control.is-valid {
+			border-color: #28a745;
+		}
+		
+		.form-control.is-invalid {
+			border-color: #dc3545;
+		}
+		
+		.input-icon {
+			position: relative;
+		}
+		
+		.input-icon i {
+			position: absolute;
+			left: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #6c757d;
+		}
+		
+		.input-icon .form-control {
+			padding-left: 45px;
+		}
+		
+		.btn-register {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			border: none;
+			color: white;
+			padding: 15px 30px;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 16px;
+			width: 100%;
+			transition: all 0.3s ease;
+		}
+		
+		.btn-register:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+		}
+		
+		.form-check {
+			margin: 20px 0;
+		}
+		
+		.form-check-label {
+			color: #6c757d;
+		}
+		
+		.form-check-label a {
+			color: #667eea;
+			text-decoration: none;
+		}
+		
+		.back-link {
+			text-align: center;
+			margin-top: 20px;
+		}
+		
+		.back-link a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+		}
+		
+		.back-link a:hover {
+			text-decoration: underline;
+		}
+		
+		.password-strength {
+			height: 4px;
+			background: #e9ecef;
+			border-radius: 2px;
+			margin-top: 8px;
+			overflow: hidden;
+		}
+		
+		.password-strength-bar {
+			height: 100%;
+			width: 0%;
+			transition: all 0.3s ease;
+		}
+		
+		.strength-weak { background: #dc3545; width: 33%; }
+		.strength-medium { background: #ffc107; width: 66%; }
+		.strength-strong { background: #28a745; width: 100%; }
+		
+		@media (max-width: 768px) {
+			.registration-card {
+				padding: 25px;
+			}
+			
+			.registration-header .icon-circle {
+				width: 60px;
+				height: 60px;
+				font-size: 24px;
+			}
+		}
+	</style>
+	</head>
+	<body>
+		<div class="registration-container">
+			<div class="registration-card">
+				<div class="registration-header">
+					<div class="icon-circle">
+						<i class="fas fa-industry"></i>
+					</div>
+					<h2>Manufacturer Registration</h2>
+					<p>Join the blockchain network to authenticate your products</p>
+				</div>
+
+				<form id="manufacturerRegistrationForm">
+					<!-- Company Information -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-building"></i>
+							Company Information
+						</h5>
+						
+						<div class="form-group">
+							<label for="companyName">Company Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-industry"></i>
+								<input type="text" class="form-control" id="companyName" placeholder="Enter your company name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="licenseNumber">Manufacturing License Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-certificate"></i>
+								<input type="text" class="form-control" id="licenseNumber" placeholder="Enter license number" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="gstNumber">GST Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-receipt"></i>
+								<input type="text" class="form-control" id="gstNumber" placeholder="Enter GST number" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="companyAddress">Company Address *</label>
+							<textarea class="form-control" id="companyAddress" rows="3" placeholder="Enter complete address" required></textarea>
+						</div>
+					</div>
+
+					<!-- Contact Information -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-user-tie"></i>
+							Contact Person Details
+						</h5>
+						
+						<div class="form-group">
+							<label for="contactName">Full Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-user"></i>
+								<input type="text" class="form-control" id="contactName" placeholder="Enter your full name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="designation">Designation *</label>
+							<div class="input-icon">
+								<i class="fas fa-id-card"></i>
+								<input type="text" class="form-control" id="designation" placeholder="e.g., CEO, Production Manager" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="phoneNumber">Phone Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-phone"></i>
+								<input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Account Credentials -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-lock"></i>
+							Account Credentials
+						</h5>
+						
+						<div class="form-group">
+							<label for="email">Email Address *</label>
+							<div class="input-icon">
+								<i class="fas fa-envelope"></i>
+								<input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="password">Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
+							</div>
+							<div class="password-strength">
+								<div class="password-strength-bar" id="passwordStrengthBar"></div>
+							</div>
+							<small class="text-muted" id="passwordHint">Use 8+ characters with letters, numbers & symbols</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="confirmPassword">Confirm Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Terms and Conditions -->
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="termsCheck" required>
+						<label class="form-check-label" for="termsCheck">
+							I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+						</label>
+					</div>
+
+					<button type="submit" class="btn-register">
+						<i class="fas fa-user-plus me-2"></i>
+						Register as Manufacturer
+					</button>
+				</form>
+			</div>
+
+			<div class="back-link">
+				<a href="manufacturer-login.html">
+					<i class="fas fa-arrow-left me-2"></i>
+					Already have an account? Login here
+				</a>
+			</div>
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				// Password strength checker
+				$('#password').on('input', function() {
+					const password = $(this).val();
+					const strength = checkPasswordStrength(password);
+					const strengthBar = $('#passwordStrengthBar');
+					const hint = $('#passwordHint');
+					
+					strengthBar.removeClass('strength-weak strength-medium strength-strong');
+					
+					if (strength === 'weak') {
+						strengthBar.addClass('strength-weak');
+						hint.text('Weak password - Add more characters').css('color', '#dc3545');
+					} else if (strength === 'medium') {
+						strengthBar.addClass('strength-medium');
+						hint.text('Medium strength - Add special characters').css('color', '#ffc107');
+					} else if (strength === 'strong') {
+						strengthBar.addClass('strength-strong');
+						hint.text('Strong password!').css('color', '#28a745');
+					}
+				});
+
+				// Form validation
+				$('#manufacturerRegistrationForm').on('submit', function(e) {
+					e.preventDefault();
+					
+					if (!validateForm()) {
+						return false;
+					}
+
+					// Show loading state
+					const submitBtn = $('button[type="submit"]');
+					const originalText = submitBtn.html();
+					submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Processing Registration...');
+					submitBtn.prop('disabled', true);
+
+					// Simulate registration process
+					setTimeout(function() {
+						alert('Registration successful! Please check your email for verification link.');
+						window.location.href = 'manufacturer-login.html';
+					}, 2000);
+				});
+
+				// Real-time validation
+				$('.form-control').on('blur', function() {
+					validateField($(this));
+				});
+			});
+
+			function checkPasswordStrength(password) {
+				if (password.length < 6) return 'weak';
+				
+				const hasLetter = /[a-zA-Z]/.test(password);
+				const hasNumber = /\d/.test(password);
+				const hasSpecial = /[!@#$%^&*]/.test(password);
+				
+				if (password.length >= 8 && hasLetter && hasNumber && hasSpecial) {
+					return 'strong';
+				} else if (password.length >= 6 && (hasLetter && hasNumber)) {
+					return 'medium';
+				}
+				return 'weak';
+			}
+
+			function validateField(field) {
+				const value = field.val().trim();
+				const fieldId = field.attr('id');
+				
+				field.removeClass('is-valid is-invalid');
+				
+				if (!value && field.prop('required')) {
+					field.addClass('is-invalid');
+					return false;
+				}
+				
+				// Email validation
+				if (fieldId === 'email') {
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if (!emailRegex.test(value)) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Phone validation
+				if (fieldId === 'phoneNumber') {
+					const phoneRegex = /^[0-9]{10,15}$/;
+					if (!phoneRegex.test(value.replace(/[\s-]/g, ''))) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Password match validation
+				if (fieldId === 'confirmPassword') {
+					if (value !== $('#password').val()) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				field.addClass('is-valid');
+				return true;
+			}
+
+			function validateForm() {
+				let isValid = true;
+				
+				$('.form-control[required]').each(function() {
+					if (!validateField($(this))) {
+						isValid = false;
+					}
+				});
+				
+				if (!$('#termsCheck').is(':checked')) {
+					alert('Please accept the terms and conditions');
+					isValid = false;
+				}
+				
+				if ($('#password').val() !== $('#confirmPassword').val()) {
+					alert('Passwords do not match');
+					isValid = false;
+				}
+				
+				return isValid;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Add Seller</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<style>
+		/* Page specific styles */
+		body {
+			background: linear-gradient(135deg, #1a5f4d 0%, #11998e 100%);
+		}
+
+		.back-link {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			z-index: 10;
+			background: rgba(255, 255, 255, 0.1);
+			color: white;
+			text-decoration: none;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			z-index: 1000;
+			backdrop-filter: blur(10px);
+			transition: all 0.3s;
+		}
+		.back-to-dashboard:hover {
+			background: rgba(255, 255, 255, 0.2);
+			color: white;
+		}
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+			min-height: 100vh;
+			padding: 20px 0;
+			position: relative;
+		}
+
+		body::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: 
+				radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+				radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+			z-index: 0;
+		}
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+			position: relative;
+			z-index: 1;
+		}
+
+		/* Header */
+		.header {
+			text-align: center;
+			margin-bottom: 40px;
+			animation: fadeInDown 0.6s ease;
+		}
+
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.header h1 {
+			color: white;
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 15px;
+		}
+
+		.header p {
+			color: rgba(255,255,255,0.9);
+			font-size: 1.1rem;
+		}
+
+		.back-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			color: white;
+			text-decoration: none;
+			padding: 10px 20px;
+			background: rgba(255,255,255,0.15);
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			margin-bottom: 20px;
+		}
+
+		.back-btn:hover {
+			background: rgba(255,255,255,0.25);
+			transform: translateX(-5px);
+		}
+
+		/* Main Card */
+		.main-card {
+			background: rgba(255,255,255,0.98);
+			border-radius: 25px;
+			padding: 40px;
+			box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+			animation: fadeInUp 0.6s ease;
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.section-title {
+			color: #2c3e50;
+			font-size: 1.8rem;
+			font-weight: 700;
+			margin-bottom: 30px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.section-title i {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		/* Progress Steps */
+		.progress-steps {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 40px;
+			position: relative;
+		}
+
+		.progress-steps::before {
+			content: '';
+			position: absolute;
+			top: 20px;
+			left: 0;
+			right: 0;
+			height: 2px;
+			background: #e9ecef;
+			z-index: 0;
+		}
+
+		.progress-line {
+			position: absolute;
+			top: 20px;
+			left: 0;
+			height: 2px;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			transition: width 0.3s ease;
+			z-index: 1;
+		}
+
+		.step {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			position: relative;
+			z-index: 2;
+		}
+
+		.step-number {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #e9ecef;
+			color: #6c757d;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 600;
+			margin-bottom: 8px;
+			transition: all 0.3s ease;
+		}
+
+		.step.active .step-number {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+		}
+
+		.step.completed .step-number {
+			background: #28a745;
+			color: white;
+		}
+
+		.step-label {
+			font-size: 0.85rem;
+			color: #6c757d;
+			font-weight: 500;
+		}
+
+		.step.active .step-label {
+			color: #667eea;
+			font-weight: 600;
+		}
+
+		/* Form Grid */
+		.form-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 25px;
+			margin-bottom: 30px;
+		}
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.form-group.full-width {
+			grid-column: 1 / -1;
+		}
+
+		.form-group label {
+			color: #495057;
+			font-weight: 600;
+			margin-bottom: 8px;
+			font-size: 0.95rem;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.form-group label i {
+			color: #667eea;
+			font-size: 1rem;
+		}
+
+		.required {
+			color: #dc3545;
+		}
+
+		.form-control {
+			padding: 14px 18px;
+			border: 2px solid #e9ecef;
+			border-radius: 12px;
+			font-size: 1rem;
+			transition: all 0.3s ease;
+			font-family: 'Inter', sans-serif;
+			background: white;
+		}
+
+		.form-control:focus {
+			outline: none;
+			border-color: #667eea;
+			box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+		}
+
+		.form-control.is-invalid {
+			border-color: #dc3545;
+		}
+
+		.form-control.is-valid {
+			border-color: #28a745;
+		}
+
+		.invalid-feedback {
+			color: #dc3545;
+			font-size: 0.85rem;
+			margin-top: 5px;
+			display: none;
+		}
+
+		.form-control.is-invalid ~ .invalid-feedback {
+			display: block;
+		}
+
+		.helper-text {
+			color: #6c757d;
+			font-size: 0.85rem;
+			margin-top: 5px;
+		}
+
+		/* Info Box */
+		.info-box {
+			background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+			border-left: 4px solid #667eea;
+			padding: 20px;
+			border-radius: 12px;
+			margin-bottom: 30px;
+		}
+
+		.info-box h4 {
+			color: #667eea;
+			font-size: 1.1rem;
+			margin-bottom: 10px;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.info-box p {
+			color: #495057;
+			margin: 0;
+			line-height: 1.6;
+		}
+
+		/* Buttons */
+		.button-group {
+			display: flex;
+			gap: 15px;
+			justify-content: flex-end;
+			margin-top: 30px;
+		}
+
+		.btn {
+			padding: 14px 30px;
+			border-radius: 12px;
+			font-size: 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			border: none;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+		}
+
+		.btn-primary:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+		}
+
+		.btn-secondary {
+			background: #6c757d;
+			color: white;
+		}
+
+		.btn-secondary:hover {
+			background: #5a6268;
+			transform: translateY(-2px);
+		}
+
+		.btn:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		/* Alert Messages */
+		.alert {
+			padding: 16px 20px;
+			border-radius: 12px;
+			margin-bottom: 20px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			animation: slideIn 0.3s ease;
+		}
+
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateX(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.alert-success {
+			background: #d4edda;
+			color: #155724;
+			border: 2px solid #c3e6cb;
+		}
+
+		.alert-danger {
+			background: #f8d7da;
+			color: #721c24;
+			border: 2px solid #f5c6cb;
+		}
+
+		.alert-info {
+			background: #d1ecf1;
+			color: #0c5460;
+			border: 2px solid #bee5eb;
+		}
+
+		/* Loading Spinner */
+		.spinner {
+			border: 3px solid rgba(255,255,255,0.3);
+			border-top: 3px solid white;
+			border-radius: 50%;
+			width: 18px;
+			height: 18px;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		/* Character Counter */
+		.char-counter {
+			font-size: 0.85rem;
+			color: #6c757d;
+			text-align: right;
+			margin-top: 5px;
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.header h1 {
+				font-size: 1.8rem;
+				flex-direction: column;
+			}
+
+			.main-card {
+				padding: 25px;
+			}
+
+			.form-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.progress-steps {
+				flex-direction: column;
+				gap: 15px;
+			}
+
+			.progress-steps::before,
+			.progress-line {
+				display: none;
+			}
+
+			.button-group {
+				flex-direction: column;
+			}
+
+			.btn {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+	</style>
+</head>
+<body>
+		<a href="manufacturer.html" class="back-to-dashboard">
+			<i class="fas fa-arrow-left"></i>
+			Back to Dashboard
+		</a>
+		<div class="container">
+		<a href="manufacturer.html" class="back-btn">
+			<i class="fas fa-arrow-left"></i>
+			Back to Dashboard
+		</a>
+
+		<div class="header">
+			<h1>
+				<i class="fas fa-user-plus"></i>
+				Add New Seller
+			</h1>
+			<p>Register a new authorized seller in your network</p>
+		</div>
+
+		<div class="main-card">
+			<!-- Progress Steps -->
+			<div class="progress-steps">
+				<div class="progress-line" id="progressLine"></div>
+				<div class="step active" data-step="1">
+					<div class="step-number">1</div>
+					<div class="step-label">Basic Info</div>
+				</div>
+				<div class="step" data-step="2">
+					<div class="step-number">2</div>
+					<div class="step-label">Contact</div>
+				</div>
+				<div class="step" data-step="3">
+					<div class="step-number">3</div>
+					<div class="step-label">Review</div>
+				</div>
+			</div>
+
+			<h2 class="section-title">
+				<i class="fas fa-store"></i>
+				Seller Information
+			</h2>
+
+			<div class="info-box">
+				<h4><i class="fas fa-info-circle"></i> Important Information</h4>
+				<p>Please ensure all seller information is accurate. Once a seller is registered on the blockchain, their details will be permanently recorded and can be verified throughout the supply chain.</p>
+			</div>
+
+			<div id="alertContainer"></div>
+
+			<form id="addSellerForm">
+				<div class="form-grid">
+					<!-- Seller Name -->
+					<div class="form-group">
+						<label for="SellerName">
+							<i class="fas fa-user"></i>
+							Seller Name <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="SellerName" 
+							name="SellerName" 
+							placeholder="Enter seller full name"
+							required
+							maxlength="100"
+						>
+						<div class="invalid-feedback">Please enter seller name</div>
+						<div class="helper-text">Full legal name of the seller</div>
+					</div>
+
+					<!-- Seller Brand -->
+					<div class="form-group">
+						<label for="SellerBrand">
+							<i class="fas fa-tag"></i>
+							Seller Brand <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="SellerBrand" 
+							name="SellerBrand" 
+							placeholder="Enter brand name"
+							required
+							maxlength="100"
+						>
+						<div class="invalid-feedback">Please enter brand name</div>
+						<div class="helper-text">Business or brand name</div>
+					</div>
+
+					<!-- Seller Code -->
+					<div class="form-group">
+						<label for="SellerCode">
+							<i class="fas fa-barcode"></i>
+							Seller Code <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="SellerCode" 
+							name="SellerCode" 
+							placeholder="e.g., SELL-00123"
+							required
+							pattern="SELL-[0-9]{5}"
+							maxlength="11"
+						>
+						<div class="invalid-feedback">Format: SELL-XXXXX (5 digits)</div>
+						<div class="helper-text">Unique identifier (Format: SELL-XXXXX)</div>
+					</div>
+
+					<!-- Phone Number -->
+					<div class="form-group">
+						<label for="SellerPhoneNumber">
+							<i class="fas fa-phone"></i>
+							Phone Number <span class="required">*</span>
+						</label>
+						<input 
+							type="tel" 
+							class="form-control" 
+							id="SellerPhoneNumber" 
+							name="SellerPhoneNumber" 
+							placeholder="+91 XXXXXXXXXX"
+							required
+							pattern="[+]?[0-9]{10,15}"
+						>
+						<div class="invalid-feedback">Please enter valid phone number</div>
+						<div class="helper-text">Contact number with country code</div>
+					</div>
+
+					<!-- Seller Manager -->
+					<div class="form-group">
+						<label for="SellerManager">
+							<i class="fas fa-user-tie"></i>
+							Manager Name <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="SellerManager" 
+							name="SellerManager" 
+							placeholder="Enter manager name"
+							required
+							maxlength="100"
+						>
+						<div class="invalid-feedback">Please enter manager name</div>
+						<div class="helper-text">Primary contact person</div>
+					</div>
+
+					<!-- Manufacturer ID -->
+					<div class="form-group">
+						<label for="ManufacturerId">
+							<i class="fas fa-industry"></i>
+							Manufacturer ID <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="ManufacturerId" 
+							name="ManufacturerId" 
+							placeholder="e.g., MFG-2024-001"
+							required
+							pattern="MFG-[0-9]{4}-[0-9]{3}"
+						>
+						<div class="invalid-feedback">Format: MFG-YYYY-XXX</div>
+						<div class="helper-text">Your manufacturer identification</div>
+					</div>
+
+					<!-- Seller Address -->
+					<div class="form-group full-width">
+						<label for="SellerAddress">
+							<i class="fas fa-map-marker-alt"></i>
+							Business Address <span class="required">*</span>
+						</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							id="SellerAddress" 
+							name="SellerAddress" 
+							placeholder="Enter complete business address"
+							required
+							maxlength="200"
+						>
+						<div class="invalid-feedback">Please enter business address</div>
+						<div class="char-counter">
+							<span id="addressCounter">0</span>/200 characters
+						</div>
+					</div>
+				</div>
+
+				<div class="button-group">
+					<button type="button" class="btn btn-secondary" id="resetBtn">
+						<i class="fas fa-redo"></i>
+						Reset Form
+					</button>
+					<button type="submit" class="btn btn-primary" id="submitBtn">
+						<i class="fas fa-check-circle"></i>
+						Add Seller
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/sellerApp.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Auto-format Seller Code
+			$('#SellerCode').on('input', function() {
+				let value = $(this).val().toUpperCase().replace(/[^0-9]/g, '');
+				if (value.length > 5) value = value.substring(0, 5);
+				$(this).val(value ? 'SELL-' + value : '');
+			});
+
+			// Auto-format Manufacturer ID
+			$('#ManufacturerId').on('input', function() {
+				let value = $(this).val().toUpperCase();
+				// Keep only valid characters
+				value = value.replace(/[^MFG0-9-]/g, '');
+				$(this).val(value);
+			});
+
+			// Phone number formatting
+			$('#SellerPhoneNumber').on('input', function() {
+				let value = $(this).val().replace(/[^0-9+]/g, '');
+				$(this).val(value);
+			});
+
+			// Character counter for address
+			$('#SellerAddress').on('input', function() {
+				const length = $(this).val().length;
+				$('#addressCounter').text(length);
+				if (length > 180) {
+					$('#addressCounter').css('color', '#dc3545');
+				} else {
+					$('#addressCounter').css('color', '#6c757d');
+				}
+			});
+
+			// Real-time validation
+			$('.form-control').on('blur', function() {
+				validateField($(this));
+			});
+
+			function validateField(field) {
+				if (field.val().trim() === '' && field.prop('required')) {
+					field.addClass('is-invalid').removeClass('is-valid');
+					return false;
+				} else if (field.attr('pattern')) {
+					const pattern = new RegExp(field.attr('pattern'));
+					if (!pattern.test(field.val())) {
+						field.addClass('is-invalid').removeClass('is-valid');
+						return false;
+					}
+				}
+				field.addClass('is-valid').removeClass('is-invalid');
+				return true;
+			}
+
+			// Show alert function
+			function showAlert(message, type) {
+				const alertHtml = `
+					<div class="alert alert-${type}">
+						<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}"></i>
+						${message}
+					</div>
+				`;
+				$('#alertContainer').html(alertHtml);
+				
+				setTimeout(function() {
+					$('#alertContainer').fadeOut(function() {
+						$(this).html('').show();
+					});
+				}, 5000);
+			}
+
+			// Update progress steps
+			function updateProgress(step) {
+				$('.step').each(function(index) {
+					const stepNum = index + 1;
+					if (stepNum < step) {
+						$(this).addClass('completed').removeClass('active');
+					} else if (stepNum === step) {
+						$(this).addClass('active').removeClass('completed');
+					} else {
+						$(this).removeClass('active completed');
+					}
+				});
+
+				const progressWidth = ((step - 1) / 2) * 100;
+				$('#progressLine').css('width', progressWidth + '%');
+			}
+
+			// Form submission
+			$('#addSellerForm').on('submit', function(e) {
+				e.preventDefault();
+
+				// Validate all fields
+				let isValid = true;
+				$('.form-control').each(function() {
+					if (!validateField($(this))) {
+						isValid = false;
+					}
+				});
+
+				if (!isValid) {
+					showAlert('Please correct all errors before submitting.', 'danger');
+					return;
+				}
+
+				// Update progress to step 3
+				updateProgress(3);
+
+				// Get form data
+				const formData = {
+					sellerName: $('#SellerName').val(),
+					sellerBrand: $('#SellerBrand').val(),
+					sellerCode: $('#SellerCode').val(),
+					sellerPhone: $('#SellerPhoneNumber').val(),
+					sellerManager: $('#SellerManager').val(),
+					sellerAddress: $('#SellerAddress').val(),
+					manufacturerId: $('#ManufacturerId').val()
+				};
+
+				// Show loading state
+				const submitBtn = $('#submitBtn');
+				const originalText = submitBtn.html();
+				submitBtn.html('<div class="spinner"></div> Adding Seller...').prop('disabled', true);
+
+				// Simulate blockchain transaction
+				setTimeout(function() {
+					submitBtn.html(originalText).prop('disabled', false);
+					showAlert('Seller successfully added to blockchain! Code: ' + formData.sellerCode, 'success');
+					
+					// Reset form after success
+					setTimeout(function() {
+						$('#addSellerForm')[0].reset();
+						$('.form-control').removeClass('is-valid is-invalid');
+						$('#addressCounter').text('0');
+						updateProgress(1);
+					}, 2000);
+				}, 2500);
+			});
+
+			// Reset button
+			$('#resetBtn').on('click', function() {
+				if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+					$('#addSellerForm')[0].reset();
+					$('.form-control').removeClass('is-valid is-invalid');
+					$('#addressCounter').text('0');
+					$('#alertContainer').html('');
+					updateProgress(1);
+					showAlert('Form has been reset.', 'info');
+				}
+			});
+
+			// Initialize progress
+			updateProgress(1);
+		});
+	</script>
+</body>
+</html>

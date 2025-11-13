@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Manufacturer Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script>
+        function validateLogin() {
+            // Basic validation - you should implement proper authentication
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username && password) {
+                // Redirect to manufacturer dashboard on successful login
+                window.location.href = 'manufacturer.html';
+                return false;
+            }
+            alert('Please enter both username and password');
+            return false;
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -80px;
+            right: -80px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 45px;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-header .icon-wrapper i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .login-header h2 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            color: #667eea;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+            background: #fff;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745;
+        }
+
+        .invalid-feedback, .valid-feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+        }
+
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 14px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+            text-decoration: none;
+            transform: translateX(-5px);
+            display: inline-block;
+        }
+
+        .alert {
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .strength-meter {
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-meter-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="icon-wrapper">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h2>Manufacturer Login</h2>
+                <p>Access your manufacturing dashboard</p>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <form id="manufacturerLoginForm" onsubmit="return validateLogin()" novalidate>
+                <div class="mb-3">
+                    <label for="manufacturerEmail" class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" id="manufacturerEmail" 
+                               placeholder="manufacturer@company.com" required>
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="manufacturerPassword" class="form-label">Password</label>
+                    <div class="input-group position-relative">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="manufacturerPassword" 
+                               placeholder="Enter your password" required minlength="6">
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="manufacturerLicense" class="form-label">Manufacturing License ID</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-certificate"></i></span>
+                        <input type="text" class="form-control" id="manufacturerLicense" 
+                               placeholder="MFG-XXXXX-XXXX" required pattern="[A-Z0-9-]{10,}">
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid license ID (e.g., MFG-12345-ABCD).</div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me for 30 days
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-login w-100 mb-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard
+                </button>
+
+                <div class="text-center">
+                    <a href="#" class="text-muted" id="forgotPassword">Forgot Password?</a>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="text-center">
+                    <p class="mb-2 text-muted">Don't have an account?</p>
+                    <a href="manufacturerReg.html" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-user-plus me-2"></i>Register as Manufacturer
+                    </a>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Home
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Password toggle functionality
+            $('#togglePassword').on('click', function() {
+                const passwordField = $('#manufacturerPassword');
+                const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+
+            // Email validation
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // License validation
+            function validateLicense(license) {
+                const re = /^[A-Z0-9-]{10,}$/;
+                return re.test(license);
+            }
+
+            // Show alert function
+            function showAlert(message, type) {
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                $('#alertContainer').html(alertHtml);
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(function() {
+                    $('.alert').fadeOut();
+                }, 5000);
+            }
+
+            // Real-time validation
+            $('#manufacturerEmail').on('blur', function() {
+                const email = $(this).val();
+                if (email && !validateEmail(email)) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (email) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            $('#manufacturerPassword').on('input', function() {
+                const password = $(this).val();
+                if (password.length > 0 && password.length < 6) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (password.length >= 6) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            $('#manufacturerLicense').on('blur', function() {
+                const license = $(this).val().toUpperCase();
+                $(this).val(license);
+                if (license && !validateLicense(license)) {
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (license) {
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+
+            // Forgot password
+            $('#forgotPassword').on('click', function(e) {
+                e.preventDefault();
+                showAlert('Password reset functionality would be implemented here. Please contact support@fakeid.com', 'info');
+            });
+
+            // Form submission
+            $('#manufacturerLoginForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const email = $('#manufacturerEmail').val().trim();
+                const password = $('#manufacturerPassword').val();
+                const license = $('#manufacturerLicense').val().trim().toUpperCase();
+                const rememberMe = $('#rememberMe').is(':checked');
+
+                // Validation
+                let isValid = true;
+
+                if (!validateEmail(email)) {
+                    $('#manufacturerEmail').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#manufacturerEmail').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (password.length < 6) {
+                    $('#manufacturerPassword').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#manufacturerPassword').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!validateLicense(license)) {
+                    $('#manufacturerLicense').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#manufacturerLicense').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!isValid) {
+                    showAlert('Please correct the errors in the form.', 'danger');
+                    return;
+                }
+
+                // Show loading state
+                const submitBtn = $('button[type="submit"]');
+                const originalText = submitBtn.html();
+                submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Authenticating...').prop('disabled', true);
+
+                // Simulate API call
+                setTimeout(function() {
+                    // Demo credentials for testing
+                    const demoEmail = 'manufacturer@demo.com';
+                    const demoPassword = 'demo123';
+                    const demoLicense = 'MFG-12345-DEMO';
+
+                    if (email === demoEmail && password === demoPassword && license === demoLicense) {
+                        showAlert('Login successful! Redirecting to dashboard...', 'success');
+                        
+                        // Store session (in real app, this would be handled server-side)
+                        if (rememberMe) {
+                            // In production, use secure httpOnly cookies
+                            console.log('Remember me enabled - session extended');
+                        }
+                        
+                        setTimeout(function() {
+                            window.location.href = 'manufacturer.html';
+                        }, 1500);
+                    } else {
+                        showAlert('Invalid credentials. Please try again. (Demo: manufacturer@demo.com / demo123 / MFG-12345-DEMO)', 'danger');
+                        submitBtn.html(originalText).prop('disabled', false);
+                    }
+                }, 1500);
+            });
+
+            // Auto-format license input
+            $('#manufacturerLicense').on('input', function() {
+                let value = $(this).val().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+                $(this).val(value);
+            });
+        });
+    </script>
+</body>
+</html>
