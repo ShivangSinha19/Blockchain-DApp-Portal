@@ -1,6 +1,5 @@
 # Blockchain-DApp-Portal
 Blockchain-Based Decentralized Application for Counterfeit Product Detection and Prevention
-# Product Verification DApp
 
 This project is a decentralized application (DApp) for product verification built on the Ethereum blockchain. It allows users to verify the authenticity of products by interacting with a smart contract.
 
