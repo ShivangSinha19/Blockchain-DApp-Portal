@@ -1,16 +1,30 @@
 {
-  "builds": [
+  "version": 2,
+  "buildCommand": "echo 'No build required'",
+  "outputDirectory": "src",
+  "routes": [
     {
-      "src": "package.json",
-      "use": "@vercel/node"
+      "src": "/(.*)",
+      "dest": "/src/$1"
     }
   ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/src/index.html"
     }
-  ]
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
