@@ -1,8 +1,25 @@
 {
   "version": 2,
-  "buildCommand": "echo 'No build required'",
+  "buildCommand": "echo 'Static site'",
   "outputDirectory": "src",
+  "installCommand": "echo 'No install needed'",
   "routes": [
+    {
+      "src": "/css/(.*)",
+      "dest": "/src/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/src/js/$1"
+    },
+    {
+      "src": "/(.*\\.html)",
+      "dest": "/src/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/src/index.html"
+    },
     {
       "src": "/(.*)",
       "dest": "/src/$1"
