@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Verify Products</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			min-height: 100vh;
+			padding: 20px 0;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		/* Header */
+		.header {
+			text-align: center;
+			margin-bottom: 40px;
+			animation: fadeInDown 0.6s ease;
+		}
+
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.header h1 {
+			color: white;
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 15px;
+		}
+
+		.header p {
+			color: rgba(255,255,255,0.9);
+			font-size: 1.1rem;
+		}
+
+		.back-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			color: white;
+			text-decoration: none;
+			padding: 10px 20px;
+			background: rgba(255,255,255,0.15);
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			margin-bottom: 20px;
+		}
+
+		.back-btn:hover {
+			background: rgba(255,255,255,0.25);
+			transform: translateX(-5px);
+		}
+
+		/* Main Card */
+		.main-card {
+			background: white;
+			border-radius: 25px;
+			padding: 40px;
+			box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+			margin-bottom: 30px;
+			animation: fadeInUp 0.6s ease;
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.section-title {
+			color: #2c3e50;
+			font-size: 1.8rem;
+			font-weight: 700;
+			margin-bottom: 25px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.section-title i {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		/* QR Scanner Section */
+		.qr-scanner-section {
+			background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+			border-radius: 20px;
+			padding: 30px;
+			margin-bottom: 30px;
+			border: 2px dashed #667eea;
+		}
+
+		.qr-box {
+			max-width: 500px;
+			margin: 0 auto;
+			border-radius: 15px;
+			overflow: hidden;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+
+		#qr-reader-results {
+			margin-top: 20px;
+			padding: 15px;
+			background: white;
+			border-radius: 10px;
+			font-weight: 600;
+			color: #667eea;
+			min-height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 2px solid #e9ecef;
+		}
+
+		/* Form Section */
+		.form-section {
+			margin-top: 30px;
+		}
+
+		.form-group {
+			margin-bottom: 25px;
+		}
+
+		.form-group label {
+			display: block;
+			color: #495057;
+			font-weight: 600;
+			margin-bottom: 8px;
+			font-size: 0.95rem;
+		}
+
+		.form-control {
+			width: 100%;
+			padding: 14px 18px;
+			border: 2px solid #e9ecef;
+			border-radius: 12px;
+			font-size: 1rem;
+			transition: all 0.3s ease;
+			font-family: 'Inter', sans-serif;
+		}
+
+		.form-control:focus {
+			outline: none;
+			border-color: #667eea;
+			box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+		}
+
+		.form-control:disabled {
+			background: #f8f9fa;
+			cursor: not-allowed;
+		}
+
+		.input-icon {
+			position: relative;
+		}
+
+		.input-icon i {
+			position: absolute;
+			right: 18px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #6c757d;
+		}
+
+		.btn-verify {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			border: none;
+			padding: 16px 40px;
+			border-radius: 12px;
+			font-size: 1.1rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.btn-verify:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+		}
+
+		.btn-verify:active {
+			transform: translateY(-1px);
+		}
+
+		.btn-verify:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+			transform: none;
+		}
+
+		/* Results Section */
+		.results-card {
+			background: white;
+			border-radius: 25px;
+			padding: 40px;
+			box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+			animation: fadeInUp 0.6s ease 0.2s backwards;
+		}
+
+		.result-header {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.result-header h2 {
+			color: #2c3e50;
+			font-size: 1.8rem;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+
+		.result-status {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 12px 30px;
+			border-radius: 50px;
+			font-weight: 600;
+			font-size: 1.1rem;
+			margin: 20px 0;
+		}
+
+		.result-status.genuine {
+			background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+			color: white;
+		}
+
+		.result-status.fake {
+			background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+			color: white;
+		}
+
+		.result-status.pending {
+			background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+			color: #2c3e50;
+		}
+
+		.result-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0;
+			margin-top: 20px;
+		}
+
+		.result-table th {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			padding: 18px;
+			text-align: left;
+			font-weight: 600;
+			border-radius: 12px 12px 0 0;
+		}
+
+		.result-table td {
+			padding: 18px;
+			border-bottom: 1px solid #e9ecef;
+			color: #495057;
+		}
+
+		.result-table tr:last-child td {
+			border-bottom: none;
+		}
+
+		.result-table tr:hover {
+			background: #f8f9fa;
+		}
+
+		.address-info {
+			text-align: center;
+			margin-top: 30px;
+			padding: 20px;
+			background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+			border-radius: 15px;
+			border: 2px solid #e9ecef;
+		}
+
+		.address-info p {
+			color: #6c757d;
+			margin-bottom: 8px;
+		}
+
+		.address-info b {
+			color: #667eea;
+			font-size: 1.1rem;
+			word-break: break-all;
+		}
+
+		/* Instructions */
+		.instructions {
+			background: rgba(255,255,255,0.15);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 30px;
+			margin-bottom: 30px;
+			border: 1px solid rgba(255,255,255,0.25);
+		}
+
+		.instructions h3 {
+			color: white;
+			font-size: 1.4rem;
+			margin-bottom: 20px;
+			font-weight: 700;
+		}
+
+		.instructions ol {
+			color: rgba(255,255,255,0.95);
+			padding-left: 20px;
+		}
+
+		.instructions li {
+			margin-bottom: 12px;
+			line-height: 1.6;
+		}
+
+		/* Alert Messages */
+		.alert {
+			padding: 16px 20px;
+			border-radius: 12px;
+			margin-bottom: 20px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			animation: slideIn 0.3s ease;
+		}
+
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateX(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.alert-info {
+			background: #d1ecf1;
+			color: #0c5460;
+			border: 2px solid #bee5eb;
+		}
+
+		.alert-success {
+			background: #d4edda;
+			color: #155724;
+			border: 2px solid #c3e6cb;
+		}
+
+		.alert-warning {
+			background: #fff3cd;
+			color: #856404;
+			border: 2px solid #ffeaa7;
+		}
+
+		.alert-danger {
+			background: #f8d7da;
+			color: #721c24;
+			border: 2px solid #f5c6cb;
+		}
+
+		/* Loading Spinner */
+		.spinner {
+			border: 3px solid rgba(255,255,255,0.3);
+			border-top: 3px solid white;
+			border-radius: 50%;
+			width: 20px;
+			height: 20px;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.header h1 {
+				font-size: 1.8rem;
+				flex-direction: column;
+			}
+
+			.main-card, .results-card {
+				padding: 25px;
+			}
+
+			.qr-scanner-section {
+				padding: 20px;
+			}
+
+			.section-title {
+				font-size: 1.4rem;
+			}
+
+			.btn-verify {
+				padding: 14px 30px;
+				font-size: 1rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<a href="consumer.html" class="back-btn">
+			<i class="fas fa-arrow-left"></i>
+			Back to Dashboard
+		</a>
+
+		<div class="header">
+			<h1>
+				<i class="fas fa-shield-check"></i>
+				Product Verification
+			</h1>
+			<p>Scan QR code or enter product details to verify authenticity</p>
+		</div>
+
+		<div class="instructions">
+			<h3><i class="fas fa-info-circle"></i> How to Verify</h3>
+			<ol>
+				<li><strong>Scan QR Code:</strong> Use the camera scanner below to scan the product's QR code</li>
+				<li><strong>Or Enter Manually:</strong> Type the Product Serial Number and your Consumer Code</li>
+				<li><strong>Click Verify:</strong> Hit the "Get Product Status" button to check authenticity</li>
+				<li><strong>Check Result:</strong> View the verification result below</li>
+			</ol>
+		</div>
+
+		<div class="main-card">
+			<h2 class="section-title">
+				<i class="fas fa-qrcode"></i>
+				QR Code Scanner
+			</h2>
+
+			<div class="qr-scanner-section">
+				<div id="qr-reader" class="qr-box" role="region" aria-label="QR code reader"></div>
+				<div id="qr-reader-results" aria-live="polite">
+					<i class="fas fa-camera"></i> Waiting for QR code...
+				</div>
+			</div>
+
+			<div class="form-section">
+				<h3 class="section-title">
+					<i class="fas fa-edit"></i>
+					Product Details
+				</h3>
+
+				<div class="form-group">
+					<label for="productSN">
+						<i class="fas fa-barcode"></i> Product Serial Number
+					</label>
+					<input 
+						disabled 
+						type="text" 
+						class="form-control" 
+						id="productSN" 
+						placeholder="Automatically filled from QR scan or enter manually" 
+						name="productSN"
+					>
+					<small style="color: #6c757d; margin-top: 5px; display: block;">
+						This field is auto-filled when you scan a QR code
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="consumerCode">
+						<i class="fas fa-user-tag"></i> Consumer Code
+					</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						id="consumerCode" 
+						placeholder="Enter your unique consumer code" 
+						name="consumerCode"
+						required
+					>
+					<small style="color: #6c757d; margin-top: 5px; display: block;">
+						Your consumer identification code
+					</small>
+				</div>
+
+				<button type="submit" class="btn-verify" id="register">
+					<i class="fas fa-search"></i>
+					Get Product Status
+				</button>
+			</div>
+		</div>
+
+		<div class="results-card">
+			<div class="result-header">
+				<h2><i class="fas fa-clipboard-check"></i> Verification Results</h2>
+				<p style="color: #6c757d;">Product authenticity status will appear here</p>
+			</div>
+
+			<div id="alertContainer"></div>
+
+			<table class="result-table">
+				<thead>
+					<tr>
+						<th><i class="fas fa-list-check"></i> Product Verification Result</th>
+					</tr>
+				</thead>
+				<tbody id="logdata">
+					<tr>
+						<td style="text-align: center; padding: 40px; color: #6c757d;">
+							<i class="fas fa-hourglass-half" style="font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.5;"></i>
+							No verification performed yet. Scan a QR code or enter product details above.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="address-info">
+				<p><i class="fas fa-wallet"></i> Your Wallet Address</p>
+				<b id="add">Connecting to blockchain...</b>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://unpkg.com/html5-qrcode"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/verifyProduct.js"></script>
+	<script>
+		// Show alert function
+		function showAlert(message, type) {
+			const alertHtml = `
+				<div class="alert alert-${type}">
+					<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'info' ? 'info-circle' : type === 'warning' ? 'exclamation-triangle' : 'exclamation-circle'}"></i>
+					${message}
+				</div>
+			`;
+			$('#alertContainer').html(alertHtml);
+			
+			// Auto-dismiss after 5 seconds
+			setTimeout(function() {
+				$('#alertContainer').fadeOut(function() {
+					$(this).html('').show();
+				});
+			}, 5000);
+		}
+
+		// QR Code Scanner Setup
+		var decodedText = "Enter Product SN";
+		
+		function docReady(fn) {
+			if (document.readyState === "complete" || document.readyState === "interactive") {
+				setTimeout(fn, 1);
+			} else {
+				document.addEventListener("DOMContentLoaded", fn);
+			}
+		}
+
+		docReady(function () {
+			var resultContainer = document.getElementById('qr-reader-results');
+			var lastResult, countResults = 0;
+			
+			function onScanSuccess(decodedText, decodedResult) {
+				if (decodedText !== lastResult) {
+					++countResults;
+					lastResult = decodedText;
+					
+					// Play beep sound
+					try {
+						var audio = new Audio('beep.wav');
+						audio.play().catch(e => console.log('Audio play failed:', e));
+					} catch(e) {
+						console.log('Audio error:', e);
+					}
+					
+					// Update UI
+					document.getElementById('qr-reader-results').innerHTML = `
+						<i class="fas fa-check-circle" style="color: #28a745;"></i>
+						QR Code Detected: ${decodedText}
+					`;
+					
+					document.getElementById("productSN").value = decodedText;
+					
+					// Enable the product SN field for manual editing if needed
+					document.getElementById("productSN").disabled = false;
+					
+					// Show success alert
+					showAlert('QR Code scanned successfully! Product SN has been filled.', 'success');
+					
+					// Auto-focus on consumer code field
+					document.getElementById("consumerCode").focus();
+				}
+			}
+
+			function onScanError(errorMessage) {
+				// Handle scan error silently - don't spam console
+			}
+
+			var html5QrcodeScanner = new Html5QrcodeScanner(
+				"qr-reader", 
+				{ 
+					fps: 10, 
+					qrbox: 250,
+					aspectRatio: 1.0
+				}
+			);
+			
+			html5QrcodeScanner.render(onScanSuccess, onScanError);
+		});
+
+		// Form validation
+		$(document).ready(function() {
+			// Enable manual entry of product SN
+			$('#productSN').on('dblclick', function() {
+				$(this).prop('disabled', false);
+				showAlert('Manual entry enabled. You can now type the Product SN.', 'info');
+			});
+
+			// Verify button click handler
+			$('#register').on('click', function() {
+				const productSN = $('#productSN').val().trim();
+				const consumerCode = $('#consumerCode').val().trim();
+
+				if (!productSN) {
+					showAlert('Please scan a QR code or enter a Product Serial Number.', 'warning');
+					return;
+				}
+
+				if (!consumerCode) {
+					showAlert('Please enter your Consumer Code.', 'warning');
+					$('#consumerCode').focus();
+					return;
+				}
+
+				// Show loading state
+				const originalText = $(this).html();
+				$(this).html('<div class="spinner"></div> Verifying...').prop('disabled', true);
+
+				// Simulate verification (replace with actual blockchain call)
+				setTimeout(function() {
+					$('#register').html(originalText).prop('disabled', false);
+					showAlert('Verification request sent to blockchain. Check results below.', 'info');
+				}, 2000);
+			});
+		});
+	</script>
+</body>
+</html>

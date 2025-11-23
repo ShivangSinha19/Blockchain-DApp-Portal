@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Manufacturer Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Secure blockchain-based manufacturer dashboard for supply chain management">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+/* ========== BASE & RESET ========== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* ========== BODY & BACKGROUND ========== */
+body.manufacturer-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #a8c0ff 0%, #c2e9fb 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+body.manufacturer-page::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.08) 0%, transparent 50%),
+    url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="rgba(255,255,255,0.3)"/></pattern></defs><rect width="60" height="60" fill="url(%23grid)"/></svg>');
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== PARTICLES ========== */
+.particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: float 15s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* ========== SKIP LINK ========== */
+.skip-link {
+  position: absolute;
+  left: -9999px; top: auto;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  background: #667eea;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 10000;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: auto; height: auto;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ========== METAMASK WIDGET ========== */
+.metamask-widget {
+  position: absolute; /* Changed from fixed */
+  top: 140px; /* Distance from top of page */
+  right: 20px;
+  width: 320px;
+  background: linear-gradient(135deg, rgba(11, 17, 53, 0.1), rgba(29, 27, 27, 0.05));
+  -webkit-backdrop-filter: brightness(0.8);
+  backdrop-filter: brightness(0.8);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 2px 8px rgba(255,255,255,0.1);
+  z-index: 1000;
+  animation: slideInRight 0.5s ease-out;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(400px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wallet-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6386a9;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  font-size: 20px;
+}
+
+.widget-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.wallet-status-container { margin-bottom: 16px; }
+
+.wallet-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.status-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.wallet-status.connected .status-dot {
+  background: #4ade80;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+}
+
+.wallet-status.disconnected .status-dot {
+  background: #fbbf24;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+}
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.status-text { font-size: 14px; font-weight: 600; color: #fff; }
+
+.wallet-details {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+}
+
+.detail-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.widget-actions { display: flex; flex-direction: column; gap: 10px; }
+
+.btn-connect, .btn-disconnect {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-connect {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-connect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-connect:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.btn-disconnect {
+  background: rgba(248, 113, 113, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.btn-disconnect:hover {
+  background: rgba(248, 113, 113, 0.25);
+  border-color: rgba(248, 113, 113, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-disconnect:focus-visible { outline: 3px solid #fca5a5; outline-offset: 2px; }
+
+/* ========== NAVIGATION ========== */
+.navbar {
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item { margin: 0; }
+
+.nav-link {
+  color: #2D3748;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-link:focus-visible { outline: 3px solid #667eea; outline-offset: 2px; }
+.nav-link i { font-size: 1.1em; }
+
+/* ========== CONTAINER ========== */
+.container {
+  position: relative; /* Required for absolute child positioning */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.main-content { margin: 50px 0; text-align: center; }
+
+/* ========== WELCOME CARD ========== */
+.welcome-card {
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  padding: 60px 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-card h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+}
+
+.welcome-card h2 {
+  color: #667eea;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+}
+
+.welcome-card p {
+  color: #4A5568;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ========== ACTION GRID ========== */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.action-card {
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 35px 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.action-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+.action-card:hover::before { opacity: 1; }
+.action-card:active { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+.action-card:focus-visible { outline: 3px solid #667eea; outline-offset: 4px; }
+
+.action-card i {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+@supports not (background-clip: text) {
+  .action-card i { background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #667eea; }
+}
+
+.action-card h3 {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.action-card p {
+  color: #4A5568;
+  font-size: 0.95rem;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== FEATURES ========== */
+.features {
+  margin-top: 60px;
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-radius: 30px;
+  padding: 50px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.features h2 {
+  color: #2D3748;
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 40px 0;
+  font-weight: 700;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.feature-item { text-align: center; color: #2D3748; }
+
+.feature-item i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports not (background-clip: text) {
+  .feature-item i { background: none; -webkit-background-clip: unset; -webkit-text-fill-color: #667eea; }
+}
+
+.feature-item h4 { font-size: 1.2rem; margin: 0 0 10px 0; font-weight: 600; color: #2c3e50; }
+.feature-item p { font-size: 0.95rem; color: #4A5568; line-height: 1.6; margin: 0; }
+
+/* ========== MENU TOGGLE ========== */
+.menu-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  color: #2D3748;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0 auto;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.menu-toggle:focus-visible { outline: 3px solid #667eea; outline-offset: 2px; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  body.manufacturer-page { padding-bottom: 280px; }
+  .navbar { padding: 15px; }
+  .menu-toggle { display: flex; align-items: center; gap: 10px; }
+  .nav-list { display: none; flex-direction: column; margin-top: 15px; gap: 0.5rem; }
+  .nav-list.active { display: flex; }
+  .nav-item { width: 100%; }
+  .nav-link { width: 100%; justify-content: center; }
+  .welcome-card { padding: 40px 25px; }
+  .welcome-card h1 { font-size: 1.8rem; }
+  .welcome-card h2 { font-size: 1.4rem; }
+  .action-grid { grid-template-columns: 1fr; }
+  .features { padding: 30px 20px; }
+
+  .metamask-widget {
+    position: relative; /* Becomes part of document flow */
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+
+  @keyframes slideInUp {
+    from { transform: translateY(400px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .particle { animation: none; display: none; }
+}
+
+/* ========== HIGH CONTRAST ========== */
+@media (prefers-contrast: high) {
+  .action-card, .welcome-card, .features { border: 2px solid #000; }
+  .nav-link:focus-visible, .action-card:focus-visible, .menu-toggle:focus-visible,
+  .btn-connect:focus-visible, .btn-disconnect:focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 3px;
+  }
+}
+  </style>
+</head>
+<body class="manufacturer-page">
+
+<a href="#mainContent" class="skip-link">Skip to main content</a>
+<div class="particles" id="particles" aria-hidden="true"></div>
+
+<!-- MetaMask Widget -->
+<div id="metamaskWidget" class="metamask-widget" role="complementary" aria-label="MetaMask wallet connection">
+  <div class="widget-header">
+    <div class="wallet-icon"><i class="fas fa-wallet" aria-hidden="true"></i></div>
+    <h4 class="widget-title">MetaMask Wallet</h4>
+  </div>
+  <div class="wallet-status-container">
+    <div id="walletStatus" class="wallet-status disconnected" role="status" aria-live="polite">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="status-text">Connecting...</span>
+    </div>
+  </div>
+  <div id="walletDetails" class="wallet-details" style="display:none;">
+    <div class="detail-row">
+      <span class="detail-label">Address</span>
+      <span id="walletAddress" class="detail-value">-</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Balance</span>
+      <span id="walletBalance" class="detail-value">-</span>
+    </div>
+  </div>
+  <div class="widget-actions">
+    <button id="connectWallet" class="btn-connect" style="display:none;" type="button">
+      <i class="fas fa-plug" aria-hidden="true"></i> Connect MetaMask
+    </button>
+    <button id="disconnectWallet" class="btn-disconnect" style="display:none;" type="button">
+      <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Disconnect
+    </button>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navList" type="button">
+    <i class="fas fa-bars" aria-hidden="true"></i><span>Menu</span>
+  </button>
+  <ul class="nav-list" id="navList" role="menubar">
+    <li class="nav-item" role="none"><a href="index.html" class="nav-link active" role="menuitem" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i><span>Home</span></a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="container">
+  <div id="mainContent" class="main-content">
+    <div class="welcome-card">
+      <h1>👋 Welcome, Manufacturer</h1>
+      <h2>Manufacturer Dashboard</h2>
+      <p>Manage your products and supply chain operations using our secure blockchain-based platform. Use the navigation menu above or the quick actions below to perform operations.</p>
+    </div>
+
+    <div class="action-grid">
+      <a href="addProduct.html" class="action-card">
+        <i class="fas fa-box-open" aria-hidden="true"></i>
+        <h3>Register Product</h3>
+        <p>Add new products to the blockchain network</p>
+      </a>
+      <a href="addSeller.html" class="action-card">
+        <i class="fas fa-store" aria-hidden="true"></i>
+        <h3>Add Seller</h3>
+        <p>Register authorized sellers in your network</p>
+      </a>
+      <a href="sellProductManufacturer.html" class="action-card">
+        <i class="fas fa-truck" aria-hidden="true"></i>
+        <h3>Transfer Product</h3>
+        <p>Sell products to authorized sellers</p>
+      </a>
+      <a href="querySeller.html" class="action-card">
+        <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+        <h3>View Sellers</h3>
+        <p>Query and manage seller information</p>
+      </a>
+    </div>
+
+    <section class="features" aria-labelledby="features-heading">
+      <h2 id="features-heading">Platform Features</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <i class="fas fa-lock" aria-hidden="true"></i>
+          <h4>Secure</h4>
+          <p>Blockchain-backed security ensures data integrity</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-chart-line" aria-hidden="true"></i>
+          <h4>Traceable</h4>
+          <p>Track products through the entire supply chain</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-qrcode" aria-hidden="true"></i>
+          <h4>QR Codes</h4>
+          <p>Easy verification with QR code technology</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle" aria-hidden="true"></i>
+          <h4>Authentic</h4>
+          <p>Prevent counterfeit products effectively</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/metamaskConnect.js"></script>
+<script src="js/sellerApp.js"></script>
+
+<script>
+function toggleMenu() {
+  const navList = document.getElementById('navList');
+  const menuToggle = document.querySelector('.menu-toggle');
+  const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+  navList.classList.toggle('active');
+  menuToggle.setAttribute('aria-expanded', !isExpanded);
+}
+
+document.addEventListener('click', (e) => {
+  const navList = document.getElementById('navList');
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (!e.target.closest('.navbar') && navList.classList.contains('active')) {
+    navList.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+function createParticles() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const container = document.getElementById('particles');
+  if (!container) return;
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 15 + 's';
+    p.style.animationDuration = (15 + Math.random() * 10) + 's';
+    p.style.opacity = 0.3 + Math.random() * 0.4;
+    p.style.width = p.style.height = (4 + Math.random() * 6) + 'px';
+    container.appendChild(p);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', createParticles);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const navList = document.getElementById('navList');
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (navList.classList.contains('active')) {
+      navList.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.focus();
+    }
+  }
+});
+</script>
+</body>
+</html>

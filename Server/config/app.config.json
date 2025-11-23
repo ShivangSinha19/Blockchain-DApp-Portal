@@ -1,0 +1,7 @@
+{
+  "port": 4080,
+  "apiPrefix": "/api",
+  "ipfs": {
+    "gateway": "https://gateway.pinata.cloud/ipfs/"
+  }
+}

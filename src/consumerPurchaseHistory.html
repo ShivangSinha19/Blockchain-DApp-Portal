@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Purchase History</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			min-height: 100vh;
+			padding: 20px 0;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		/* Header */
+		.header {
+			text-align: center;
+			margin-bottom: 40px;
+			animation: fadeInDown 0.6s ease;
+		}
+
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.header h1 {
+			color: white;
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-bottom: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 15px;
+		}
+
+		.header p {
+			color: rgba(255,255,255,0.9);
+			font-size: 1.1rem;
+		}
+
+		.back-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			color: white;
+			text-decoration: none;
+			padding: 10px 20px;
+			background: rgba(255,255,255,0.15);
+			border-radius: 10px;
+			transition: all 0.3s ease;
+			margin-bottom: 20px;
+		}
+
+		.back-btn:hover {
+			background: rgba(255,255,255,0.25);
+			transform: translateX(-5px);
+		}
+
+		/* Stats Cards */
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 20px;
+			margin-bottom: 30px;
+		}
+
+		.stat-card {
+			background: rgba(255,255,255,0.15);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(255,255,255,0.25);
+			border-radius: 20px;
+			padding: 25px;
+			text-align: center;
+			animation: fadeInUp 0.6s ease backwards;
+		}
+
+		.stat-card:nth-child(1) { animation-delay: 0.1s; }
+		.stat-card:nth-child(2) { animation-delay: 0.2s; }
+		.stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+		.stat-card i {
+			font-size: 2.5rem;
+			color: white;
+			margin-bottom: 10px;
+		}
+
+		.stat-card h3 {
+			color: white;
+			font-size: 2rem;
+			font-weight: 700;
+			margin-bottom: 5px;
+		}
+
+		.stat-card p {
+			color: rgba(255,255,255,0.8);
+			font-size: 0.9rem;
+		}
+
+		/* Main Card */
+		.main-card {
+			background: white;
+			border-radius: 25px;
+			padding: 40px;
+			box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+			margin-bottom: 30px;
+			animation: fadeInUp 0.6s ease;
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.section-title {
+			color: #2c3e50;
+			font-size: 1.8rem;
+			font-weight: 700;
+			margin-bottom: 25px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.section-title i {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		/* Form Section */
+		.form-section {
+			background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+			border-radius: 20px;
+			padding: 30px;
+			margin-bottom: 30px;
+			border: 2px solid #e9ecef;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group label {
+			display: block;
+			color: #495057;
+			font-weight: 600;
+			margin-bottom: 8px;
+			font-size: 0.95rem;
+		}
+
+		.form-control {
+			width: 100%;
+			padding: 14px 18px;
+			border: 2px solid #e9ecef;
+			border-radius: 12px;
+			font-size: 1rem;
+			transition: all 0.3s ease;
+			font-family: 'Inter', sans-serif;
+			background: white;
+		}
+
+		.form-control:focus {
+			outline: none;
+			border-color: #667eea;
+			box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+		}
+
+		.btn-get-products {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			border: none;
+			padding: 16px 40px;
+			border-radius: 12px;
+			font-size: 1.1rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+		}
+
+		.btn-get-products:hover:not(:disabled) {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+		}
+
+		.btn-get-products:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		/* Search & Filter */
+		.controls-section {
+			display: flex;
+			gap: 15px;
+			margin-bottom: 20px;
+			flex-wrap: wrap;
+		}
+
+		.search-box {
+			flex: 1;
+			min-width: 250px;
+			position: relative;
+		}
+
+		.search-box input {
+			width: 100%;
+			padding: 12px 45px 12px 18px;
+			border: 2px solid #e9ecef;
+			border-radius: 12px;
+			font-size: 0.95rem;
+		}
+
+		.search-box input:focus {
+			outline: none;
+			border-color: #667eea;
+		}
+
+		.search-box i {
+			position: absolute;
+			right: 18px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #6c757d;
+		}
+
+		.filter-btn {
+			padding: 12px 24px;
+			border: 2px solid #e9ecef;
+			background: white;
+			border-radius: 12px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.filter-btn:hover {
+			border-color: #667eea;
+			color: #667eea;
+		}
+
+		.filter-btn.active {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			border-color: transparent;
+		}
+
+		/* Table Section */
+		.table-container {
+			background: white;
+			border-radius: 25px;
+			padding: 40px;
+			box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+			animation: fadeInUp 0.6s ease 0.2s backwards;
+			overflow-x: auto;
+		}
+
+		.data-table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+
+		.data-table thead {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		}
+
+		.data-table th {
+			color: white;
+			padding: 18px;
+			text-align: left;
+			font-weight: 600;
+			font-size: 0.95rem;
+			white-space: nowrap;
+		}
+
+		.data-table th:first-child {
+			border-radius: 12px 0 0 0;
+		}
+
+		.data-table th:last-child {
+			border-radius: 0 12px 0 0;
+		}
+
+		.data-table td {
+			padding: 18px;
+			border-bottom: 1px solid #e9ecef;
+			color: #495057;
+		}
+
+		.data-table tbody tr {
+			transition: all 0.3s ease;
+		}
+
+		.data-table tbody tr:hover {
+			background: #f8f9fa;
+			transform: scale(1.01);
+		}
+
+		.data-table tbody tr:last-child td {
+			border-bottom: none;
+		}
+
+		.data-table tbody tr:last-child td:first-child {
+			border-radius: 0 0 0 12px;
+		}
+
+		.data-table tbody tr:last-child td:last-child {
+			border-radius: 0 0 12px 0;
+		}
+
+		/* Product Badge */
+		.product-sn {
+			font-family: 'Courier New', monospace;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			padding: 6px 12px;
+			border-radius: 6px;
+			font-weight: 600;
+			font-size: 0.85rem;
+		}
+
+		/* Status Badge */
+		.status-badge {
+			padding: 6px 12px;
+			border-radius: 20px;
+			font-size: 0.85rem;
+			font-weight: 600;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+		}
+
+		.status-badge.verified {
+			background: #d4edda;
+			color: #155724;
+		}
+
+		/* Empty State */
+		.empty-state {
+			text-align: center;
+			padding: 60px 20px;
+			color: #6c757d;
+		}
+
+		.empty-state i {
+			font-size: 4rem;
+			margin-bottom: 20px;
+			opacity: 0.3;
+		}
+
+		.empty-state h3 {
+			font-size: 1.5rem;
+			margin-bottom: 10px;
+			color: #495057;
+		}
+
+		.empty-state p {
+			font-size: 1rem;
+		}
+
+		/* Address Info */
+		.address-info {
+			text-align: center;
+			margin-top: 30px;
+			padding: 20px;
+			background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+			border-radius: 15px;
+			border: 2px solid #e9ecef;
+		}
+
+		.address-info p {
+			color: #6c757d;
+			margin-bottom: 8px;
+		}
+
+		.address-info b {
+			color: #667eea;
+			font-size: 1.1rem;
+			word-break: break-all;
+		}
+
+		/* Loading Spinner */
+		.spinner {
+			border: 3px solid rgba(255,255,255,0.3);
+			border-top: 3px solid white;
+			border-radius: 50%;
+			width: 20px;
+			height: 20px;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		/* Alert Messages */
+		.alert {
+			padding: 16px 20px;
+			border-radius: 12px;
+			margin-bottom: 20px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			animation: slideIn 0.3s ease;
+		}
+
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateX(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.alert-info {
+			background: #d1ecf1;
+			color: #0c5460;
+			border: 2px solid #bee5eb;
+		}
+
+		.alert-success {
+			background: #d4edda;
+			color: #155724;
+			border: 2px solid #c3e6cb;
+		}
+
+		.alert-warning {
+			background: #fff3cd;
+			color: #856404;
+			border: 2px solid #ffeaa7;
+		}
+
+		/* Action Buttons */
+		.action-btn {
+			padding: 8px 16px;
+			border: none;
+			border-radius: 8px;
+			font-size: 0.85rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.action-btn.view {
+			background: #17a2b8;
+			color: white;
+		}
+
+		.action-btn.view:hover {
+			background: #138496;
+			transform: translateY(-2px);
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			.header h1 {
+				font-size: 1.8rem;
+				flex-direction: column;
+			}
+
+			.main-card, .table-container {
+				padding: 25px;
+			}
+
+			.controls-section {
+				flex-direction: column;
+			}
+
+			.search-box {
+				min-width: 100%;
+			}
+
+			.data-table {
+				font-size: 0.85rem;
+			}
+
+			.data-table th,
+			.data-table td {
+				padding: 12px 8px;
+			}
+
+			.stats-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<a href="consumer.html" class="back-btn">
+			<i class="fas fa-arrow-left"></i>
+			Back to Dashboard
+		</a>
+
+		<div class="header">
+			<h1>
+				<i class="fas fa-history"></i>
+				Purchase History
+			</h1>
+			<p>View all your verified product purchases</p>
+		</div>
+
+		<!-- Stats Cards -->
+		<div class="stats-grid">
+			<div class="stat-card">
+				<i class="fas fa-shopping-basket"></i>
+				<h3 id="totalProducts">0</h3>
+				<p>Total Purchases</p>
+			</div>
+			<div class="stat-card">
+				<i class="fas fa-check-circle"></i>
+				<h3 id="verifiedProducts">0</h3>
+				<p>Verified Products</p>
+			</div>
+			<div class="stat-card">
+				<i class="fas fa-calendar-alt"></i>
+				<h3 id="recentPurchases">0</h3>
+				<p>This Month</p>
+			</div>
+		</div>
+
+		<!-- Search Form -->
+		<div class="main-card">
+			<h2 class="section-title">
+				<i class="fas fa-search"></i>
+				Search Your Purchases
+			</h2>
+
+			<div class="form-section">
+				<div id="alertContainer"></div>
+
+				<div class="form-group">
+					<label for="consumerCode">
+						<i class="fas fa-user-tag"></i> Consumer Code
+					</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						id="consumerCode" 
+						placeholder="Enter your unique consumer code" 
+						name="consumerCode"
+						required
+					>
+					<small style="color: #6c757d; margin-top: 5px; display: block;">
+						Your consumer identification code to retrieve purchase history
+					</small>
+				</div>
+
+				<button type="submit" class="btn-get-products" id="register">
+					<i class="fas fa-download"></i>
+					Get Purchase History
+				</button>
+			</div>
+		</div>
+
+		<!-- Results Table -->
+		<div class="table-container">
+			<div class="section-title">
+				<i class="fas fa-list"></i>
+				Your Products
+			</div>
+
+			<div class="controls-section">
+				<div class="search-box">
+					<input 
+						type="text" 
+						id="tableSearch" 
+						placeholder="Search by Product SN, Seller, or Manufacturer..."
+					>
+					<i class="fas fa-search"></i>
+				</div>
+				<button class="filter-btn active" data-filter="all">
+					<i class="fas fa-th"></i> All
+				</button>
+				<button class="filter-btn" data-filter="verified">
+					<i class="fas fa-check-circle"></i> Verified
+				</button>
+			</div>
+
+			<table class="data-table">
+				<thead>
+					<tr>
+						<th><i class="fas fa-hashtag"></i> #</th>
+						<th><i class="fas fa-barcode"></i> Product SN</th>
+						<th><i class="fas fa-store"></i> Seller Code</th>
+						<th><i class="fas fa-industry"></i> Manufacturer Code</th>
+						<th><i class="fas fa-shield-check"></i> Status</th>
+						<th><i class="fas fa-cog"></i> Actions</th>
+					</tr>
+				</thead>
+				<tbody id="logdata">
+					<tr>
+						<td colspan="6">
+							<div class="empty-state">
+								<i class="fas fa-inbox"></i>
+								<h3>No Purchase History Yet</h3>
+								<p>Enter your Consumer Code above to retrieve your purchase history</p>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="address-info">
+				<p><i class="fas fa-wallet"></i> Your Wallet Address</p>
+				<b id="add">Connecting to blockchain...</b>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/consumerPurchaseHistory.js"></script>
+	<script>
+		// Show alert function
+		function showAlert(message, type) {
+			const alertHtml = `
+				<div class="alert alert-${type}">
+					<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'info' ? 'info-circle' : 'exclamation-triangle'}"></i>
+					${message}
+				</div>
+			`;
+			$('#alertContainer').html(alertHtml);
+			
+			setTimeout(function() {
+				$('#alertContainer').fadeOut(function() {
+					$(this).html('').show();
+				});
+			}, 5000);
+		}
+
+		$(document).ready(function() {
+			// Get Products button handler
+			$('#register').on('click', function() {
+				const consumerCode = $('#consumerCode').val().trim();
+
+				if (!consumerCode) {
+					showAlert('Please enter your Consumer Code to retrieve purchase history.', 'warning');
+					$('#consumerCode').focus();
+					return;
+				}
+
+				// Show loading state
+				const originalText = $(this).html();
+				$(this).html('<div class="spinner"></div> Loading...').prop('disabled', true);
+
+				// Simulate loading (replace with actual blockchain call)
+				setTimeout(function() {
+					$('#register').html(originalText).prop('disabled', false);
+					showAlert('Purchase history loaded successfully!', 'success');
+					
+					// Update stats
+					$('#totalProducts').text('24');
+					$('#verifiedProducts').text('24');
+					$('#recentPurchases').text('5');
+
+					// Add sample data to demonstrate
+					addSampleData();
+				}, 2000);
+			});
+
+			// Table search functionality
+			$('#tableSearch').on('keyup', function() {
+				const value = $(this).val().toLowerCase();
+				$('#logdata tr').filter(function() {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+				});
+			});
+
+			// Filter buttons
+			$('.filter-btn').on('click', function() {
+				$('.filter-btn').removeClass('active');
+				$(this).addClass('active');
+				
+				const filter = $(this).data('filter');
+				if (filter === 'all') {
+					$('#logdata tr').show();
+				} else {
+					$('#logdata tr').hide();
+					$('#logdata tr.verified').show();
+				}
+			});
+
+			// Sample data function (for demonstration)
+			function addSampleData() {
+				const sampleData = `
+					<tr class="verified">
+						<td>1</td>
+						<td><span class="product-sn">PRD-2024-001</span></td>
+						<td>SELL-00123</td>
+						<td>MFG-2024-001</td>
+						<td><span class="status-badge verified"><i class="fas fa-check-circle"></i> Verified</span></td>
+						<td>
+							<button class="action-btn view" onclick="viewDetails('PRD-2024-001')">
+								<i class="fas fa-eye"></i> View
+							</button>
+						</td>
+					</tr>
+					<tr class="verified">
+						<td>2</td>
+						<td><span class="product-sn">PRD-2024-002</span></td>
+						<td>SELL-00145</td>
+						<td>MFG-2024-001</td>
+						<td><span class="status-badge verified"><i class="fas fa-check-circle"></i> Verified</span></td>
+						<td>
+							<button class="action-btn view" onclick="viewDetails('PRD-2024-002')">
+								<i class="fas fa-eye"></i> View
+							</button>
+						</td>
+					</tr>
+					<tr class="verified">
+						<td>3</td>
+						<td><span class="product-sn">PRD-2024-003</span></td>
+						<td>SELL-00167</td>
+						<td>MFG-2024-002</td>
+						<td><span class="status-badge verified"><i class="fas fa-check-circle"></i> Verified</span></td>
+						<td>
+							<button class="action-btn view" onclick="viewDetails('PRD-2024-003')">
+								<i class="fas fa-eye"></i> View
+							</button>
+						</td>
+					</tr>
+				`;
+				$('#logdata').html(sampleData);
+			}
+		});
+
+		// View details function
+		function viewDetails(productSN) {
+			alert('Viewing details for product: ' + productSN + '\n\nThis would open a detailed view with complete product information, verification history, and blockchain transaction details.');
+		}
+	</script>
+</body>
+</html>

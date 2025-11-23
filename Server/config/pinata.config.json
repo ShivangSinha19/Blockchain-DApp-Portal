@@ -1,0 +1,9 @@
+{
+  "pinata": {
+    "jwtEnvKey": "PINATA_JWT",
+    "endpoints": {
+      "pinFile": "https://api.pinata.cloud/pinning/pinFileToIPFS",
+      "pinJSON": "https://api.pinata.cloud/pinning/pinJSONToIPFS"
+    }
+  }
+}

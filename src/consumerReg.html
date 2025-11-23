@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Consumer Registration - Blockchain Product Verification</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href='https://fonts.googleapis.com/css?family=Inter:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+			min-height: 100vh;
+			padding: 40px 0;
+		}
+		
+		.registration-container {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+		
+		.registration-card {
+			background: white;
+			border-radius: 20px;
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+			padding: 40px;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header {
+			text-align: center;
+			margin-bottom: 30px;
+		}
+		
+		.registration-header .icon-circle {
+			width: 80px;
+			height: 80px;
+			background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 20px;
+			color: white;
+			font-size: 32px;
+		}
+		
+		.registration-header h2 {
+			color: #2c3e50;
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+		
+		.registration-header p {
+			color: #6c757d;
+		}
+		
+		.form-section {
+			margin-bottom: 30px;
+		}
+		
+		.section-title {
+			font-weight: 600;
+			color: #17a2b8;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #e9ecef;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		
+		.form-group {
+			margin-bottom: 20px;
+		}
+		
+		.form-group label {
+			font-weight: 600;
+			color: #34495e;
+			margin-bottom: 8px;
+			display: block;
+		}
+		
+		.form-control {
+			border: 2px solid #e9ecef;
+			border-radius: 10px;
+			padding: 12px 16px;
+			font-size: 16px;
+			transition: all 0.3s ease;
+		}
+		
+		.form-control:focus {
+			border-color: #17a2b8;
+			box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+		}
+		
+		.form-control.is-valid {
+			border-color: #28a745;
+		}
+		
+		.form-control.is-invalid {
+			border-color: #dc3545;
+		}
+		
+		.input-icon {
+			position: relative;
+		}
+		
+		.input-icon i {
+			position: absolute;
+			left: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #6c757d;
+		}
+		
+		.input-icon .form-control {
+			padding-left: 45px;
+		}
+		
+		.btn-register {
+			background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+			border: none;
+			color: white;
+			padding: 15px 30px;
+			border-radius: 10px;
+			font-weight: 600;
+			font-size: 16px;
+			width: 100%;
+			transition: all 0.3s ease;
+		}
+		
+		.btn-register:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+		}
+		
+		.social-register {
+			margin: 30px 0;
+		}
+		
+		.divider {
+			text-align: center;
+			margin: 20px 0;
+			position: relative;
+		}
+		
+		.divider::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 100%;
+			height: 1px;
+			background: #e9ecef;
+		}
+		
+		.divider span {
+			background: white;
+			padding: 0 15px;
+			position: relative;
+			color: #6c757d;
+			font-size: 14px;
+		}
+		
+		.social-btn {
+			width: 100%;
+			padding: 12px;
+			border: 2px solid #e9ecef;
+			border-radius: 10px;
+			background: white;
+			color: #6c757d;
+			font-weight: 600;
+			margin-bottom: 10px;
+			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			cursor: pointer;
+		}
+		
+		.social-btn:hover {
+			border-color: #17a2b8;
+			background: #f8f9fa;
+		}
+		
+		.social-btn.google {
+			color: #db4437;
+		}
+		
+		.social-btn.facebook {
+			color: #4267B2;
+		}
+		
+		.form-check {
+			margin: 20px 0;
+		}
+		
+		.form-check-label {
+			color: #6c757d;
+		}
+		
+		.form-check-label a {
+			color: #17a2b8;
+			text-decoration: none;
+		}
+		
+		.back-link {
+			text-align: center;
+			margin-top: 20px;
+		}
+		
+		.back-link a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+		}
+		
+		.back-link a:hover {
+			text-decoration: underline;
+		}
+		
+		@media (max-width: 768px) {
+			.registration-card {
+				padding: 25px;
+			}
+			
+			.registration-header .icon-circle {
+				width: 60px;
+				height: 60px;
+				font-size: 24px;
+			}
+		}
+	</style>
+	</head>
+	<body>
+		<div class="registration-container">
+			<div class="registration-card">
+				<div class="registration-header">
+					<div class="icon-circle">
+						<i class="fas fa-shopping-bag"></i>
+					</div>
+					<h2>Consumer Registration</h2>
+					<p>Create your account to verify products</p>
+				</div>
+
+				<!-- Social Registration -->
+				<div class="social-register">
+					<button class="social-btn google" onclick="registerWithGoogle()">
+						<i class="fab fa-google"></i>
+						Continue with Google
+					</button>
+					<button class="social-btn facebook" onclick="registerWithFacebook()">
+						<i class="fab fa-facebook-f"></i>
+						Continue with Facebook
+					</button>
+				</div>
+
+				<div class="divider">
+					<span>OR</span>
+				</div>
+
+				<form id="consumerRegistrationForm">
+					<!-- Personal Information -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-user"></i>
+							Personal Information
+						</h5>
+						
+						<div class="form-group">
+							<label for="fullName">Full Name *</label>
+							<div class="input-icon">
+								<i class="fas fa-user"></i>
+								<input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="phoneNumber">Phone Number *</label>
+							<div class="input-icon">
+								<i class="fas fa-phone"></i>
+								<input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Account Credentials -->
+					<div class="form-section">
+						<h5 class="section-title">
+							<i class="fas fa-lock"></i>
+							Account Credentials
+						</h5>
+						
+						<div class="form-group">
+							<label for="email">Email Address *</label>
+							<div class="input-icon">
+								<i class="fas fa-envelope"></i>
+								<input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="password">Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="password" placeholder="Create a password" required>
+							</div>
+							<small class="text-muted">Use 8+ characters</small>
+						</div>
+						
+						<div class="form-group">
+							<label for="confirmPassword">Confirm Password *</label>
+							<div class="input-icon">
+								<i class="fas fa-lock"></i>
+								<input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password" required>
+							</div>
+						</div>
+					</div>
+
+					<!-- Terms and Conditions -->
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="termsCheck" required>
+						<label class="form-check-label" for="termsCheck">
+							I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+						</label>
+					</div>
+					
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="newsletterCheck">
+						<label class="form-check-label" for="newsletterCheck">
+							Send me product verification alerts and updates
+						</label>
+					</div>
+
+					<button type="submit" class="btn-register">
+						<i class="fas fa-user-plus me-2"></i>
+						Create Account
+					</button>
+				</form>
+			</div>
+
+			<div class="back-link">
+				<a href="consumer-login.html">
+					<i class="fas fa-arrow-left me-2"></i>
+					Already have an account? Login here
+				</a>
+			</div>
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				// Form validation
+				$('#consumerRegistrationForm').on('submit', function(e) {
+					e.preventDefault();
+					
+					if (!validateForm()) {
+						return false;
+					}
+
+					// Show loading state
+					const submitBtn = $('button[type="submit"]');
+					const originalText = submitBtn.html();
+					submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...');
+					submitBtn.prop('disabled', true);
+
+					// Simulate registration process
+					setTimeout(function() {
+						alert('Registration successful! Welcome to the blockchain verification platform.');
+						window.location.href = 'consumer.html';
+					}, 2000);
+				});
+
+				// Real-time validation
+				$('.form-control').on('blur', function() {
+					validateField($(this));
+				});
+			});
+
+			function registerWithGoogle() {
+				alert('Google Sign-up will be integrated here.\n\nThis will use OAuth 2.0 for secure authentication.');
+				// Implement Google OAuth integration
+			}
+
+			function registerWithFacebook() {
+				alert('Facebook Sign-up will be integrated here.\n\nThis will use Facebook Login API for secure authentication.');
+				// Implement Facebook OAuth integration
+			}
+
+			function validateField(field) {
+				const value = field.val().trim();
+				const fieldId = field.attr('id');
+				
+				field.removeClass('is-valid is-invalid');
+				
+				if (!value && field.prop('required')) {
+					field.addClass('is-invalid');
+					return false;
+				}
+				
+				// Email validation
+				if (fieldId === 'email') {
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if (!emailRegex.test(value)) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Phone validation
+				if (fieldId === 'phoneNumber') {
+					const phoneRegex = /^[0-9]{10,15}$/;
+					if (!phoneRegex.test(value.replace(/[\s-]/g, ''))) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Password validation
+				if (fieldId === 'password') {
+					if (value.length < 8) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				// Password match validation
+				if (fieldId === 'confirmPassword') {
+					if (value !== $('#password').val()) {
+						field.addClass('is-invalid');
+						return false;
+					}
+				}
+				
+				field.addClass('is-valid');
+				return true;
+			}
+
+			function validateForm() {
+				let isValid = true;
+				
+				$('.form-control[required]').each(function() {
+					if (!validateField($(this))) {
+						isValid = false;
+					}
+				});
+				
+				if (!$('#termsCheck').is(':checked')) {
+					alert('Please accept the terms and conditions');
+					isValid = false;
+				}
+				
+				if ($('#password').val() !== $('#confirmPassword').val()) {
+					alert('Passwords do not match');
+					isValid = false;
+				}
+				
+				if ($('#password').val().length < 8) {
+					alert('Password must be at least 8 characters long');
+					isValid = false;
+				}
+				
+				return isValid;
+			}
+		</script>
+	</body>
+</html>
