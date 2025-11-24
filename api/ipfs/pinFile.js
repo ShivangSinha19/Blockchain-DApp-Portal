@@ -2,7 +2,6 @@ const FormData = require('form-data');
 const axios = require('axios');
 
 module.exports = async (req, res) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -18,7 +17,6 @@ module.exports = async (req, res) => {
   try {
     const formData = new FormData();
     
-    // Handle file from request
     if (req.body && req.body.file) {
       formData.append('file', Buffer.from(req.body.file, 'base64'));
     }
@@ -40,7 +38,6 @@ module.exports = async (req, res) => {
       url: `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`
     });
   } catch (error) {
-    console.error('Pinata error:', error.response?.data || error.message);
     res.status(500).json({ 
       error: error.response?.data?.error || error.message || 'Upload failed' 
     });

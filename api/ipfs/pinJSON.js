@@ -30,7 +30,6 @@ module.exports = async (req, res) => {
       url: `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`
     });
   } catch (error) {
-    console.error('Pinata error:', error.response?.data || error.message);
     res.status(500).json({ 
       error: error.response?.data?.error || error.message || 'Upload failed' 
     });
