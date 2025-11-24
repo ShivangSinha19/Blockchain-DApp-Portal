@@ -1,31 +1,45 @@
 {
-  "name": "fake-product-identification",
+  "name": "blockchain-dapp-portal",
   "version": "1.0.0",
-  "description": "project on blockchain",
+  "description": "Blockchain-based product verification system",
   "main": "index.js",
   "scripts": {
     "dev": "lite-server",
+    "start": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "smart-contracts",
+    "product-verification"
+  ],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
-    "html5-qrcode": "^2.2.0",
-    "lite-server": "2.6"
+    "lite-server": "^2.6.1"
   },
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.7.0",
-    "cors": "^2.8.5"
+    "@truffle/hdwallet-provider": "^2.1.0",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "form-data": "^4.0.0",
+    "html5-qrcode": "^2.3.0"
   },
-  "port": 4000,
-  "apiPrefix": "/api",
-  "ipfs": {
-    "gateway": "https://gateway.pinata.cloud/ipfs/"
-  },
-  "pinata": {
-    "useProxy": true,
-    "jwtEnvKey": "PINATA_JWT",
-    "endpoints": {
-      "pinFile": "https://api.pinata.cloud/pinning/pinFileToIPFS",
-      "pinJSON": "https://api.pinata.cloud/pinning/pinJSONToIPFS"
+  "config": {
+    "port": 4000,
+    "apiPrefix": "/api",
+    "ipfs": {
+      "gateway": "https://gateway.pinata.cloud/ipfs/"
+    },
+    "pinata": {
+      "useProxy": true,
+      "jwtEnvKey": "PINATA_JWT",
+      "endpoints": {
+        "pinFile": "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        "pinJSON": "https://api.pinata.cloud/pinning/pinJSONToIPFS"
+      }
     }
   }
 }

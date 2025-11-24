@@ -2,8 +2,11 @@
   "version": 2,
   "buildCommand": "echo 'Static site'",
   "outputDirectory": "src",
-  "installCommand": "echo 'No install needed'",
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
     {
       "src": "/css/(.*)",
       "dest": "/src/css/$1"
@@ -43,5 +46,8 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "env": {
+    "PINATA_JWT": "@pinata-jwt"
+  }
 }
